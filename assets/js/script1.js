@@ -1,8 +1,12 @@
+//define block size for everything
+let blockSizeStyle = {"length":100, "girth":20}
+
 // making some classes for types of players
-let halfBlockStartStyleGreen = "width:100px;height:20px;background:green;"
-let halfBlockEndStyleGreen = "width:100px;height:20px;background:green;"
-let halfBlockStartStyleRed = "width:100px;height:20px;background:red;"
-let halfBlockEndStyleRed = "width:100px;height:20px;background:red;"
+let halfBlockStartStyleGreen = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:green;`
+let halfBlockEndStyleGreen = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:green;`
+
+let halfBlockStartStyleRed = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:red;`
+let halfBlockEndStyleRed = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:red;`
 
 
 
