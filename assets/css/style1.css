@@ -1,0 +1,47 @@
+
+.fullBlock {
+    width:500px;
+    height:100px;
+    background:red;
+    clip-path: polygon(
+        0 50%,
+        10% 0,
+        90% 0,
+        100% 50%,
+        90% 100%,
+        10% 100%
+      )
+}
+
+
+.containHalfBlocks {
+    display:flex;
+    margin: 10px;
+}
+
+.halfBlockStart {
+    width:100px;
+    height:20px;
+    background:green;
+    clip-path: polygon(
+        0 50%,
+        10% 0,
+        100% 0,
+        100% 100%,
+        10% 100%
+      );
+      
+}
+
+.halfBlockEnd {
+    width:100px;
+    height:20px;
+    background:blue;
+    clip-path: polygon(
+        0% 0%,
+        90% 0,
+        100% 50%,
+        90% 100%,
+        0% 100%
+      )
+}
