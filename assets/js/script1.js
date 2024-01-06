@@ -1,5 +1,5 @@
 //define block size for everything
-let blockSizeStyle = {"length":100, "girth":20}
+let blockSizeStyle = {"length":50, "girth":10}
 
 // making some classes for types of players
 let halfBlockStartStyleGreen = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:green;`
@@ -9,6 +9,8 @@ let halfBlockStartStyleRed = `width:${blockSizeStyle.length}px;height:${blockSiz
 let halfBlockEndStyleRed = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:red;`
 
 
+// map
+let map1 = {"rows": {"row1": [0,1,1,1,1,]}}
 
 let block2 = document.createElement("div")
 block2.className = "halfBlockStart"
@@ -42,6 +44,11 @@ function checkMinimumWindowSize(){
         console.log(`Hiding page... Window too small as ${window.innerHeight} and ${window.innerWidth}`)
         windowIsBigEnough = false
         document.getElementById("mapArea").style = "opacity: 0"
+        let widthOrHeightProblem = ""
+        if(window.innerHeight < heightValue && window.innerWidth < widthValue){widthOrHeightProblem = "wider and taller"}
+        else if (window.innerHeight < heightValue) {widthOrHeightProblem = "taller"}
+        else if (window.innerWidth < widthValue) {widthOrHeightProblem = "wider"}
+        document.getElementById("windowSizeWarning").textContent(`Please make me ${widthOrHeightProblem} to play the game.`)
     } else if (window.innerHeight >= heightValue && window.innerWidth >= widthValue && windowIsBigEnough === false){
         console.log(`Page has become large enough as ${window.innerHeight} and ${window.innerWidth}`)
 
