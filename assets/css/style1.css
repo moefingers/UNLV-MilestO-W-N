@@ -1,3 +1,6 @@
+#headerPart {
+    color:red;
+}
 
 .fullBlock {
     width:500px;
@@ -20,9 +23,6 @@
 }
 
 .halfBlockStart {
-    width:100px;
-    height:20px;
-    background:green;
     clip-path: polygon(
         0 50%,
         10% 0,
@@ -34,9 +34,6 @@
 }
 
 .halfBlockEnd {
-    width:100px;
-    height:20px;
-    background:blue;
     clip-path: polygon(
         0% 0%,
         90% 0,

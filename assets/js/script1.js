@@ -1,9 +1,18 @@
+// making some classes for types of players
+let halfBlockStartStyleGreen = "width:100px;height:20px;background:green;"
+let halfBlockEndStyleGreen = "width:100px;height:20px;background:green;"
+let halfBlockStartStyleRed = "width:100px;height:20px;background:red;"
+let halfBlockEndStyleRed = "width:100px;height:20px;background:red;"
+
 
 
 let block2 = document.createElement("div")
 block2.className = "halfBlockStart"
+block2.style = halfBlockStartStyleGreen
+
 let block3 = document.createElement("div")
 block3.className = "halfBlockEnd"
+block3.style = halfBlockEndStyleRed
 
 let container1 = document.createElement("div")
 container1.className = "containHalfBlocks"
@@ -20,36 +29,6 @@ container2.append(block3)
 document.getElementById("mapArea").append(container1)
 document.getElementById("mapArea").append(container2)
 
-// .contain1 {
-//     display:flex;
-//     margin: 10px;
-// }
-
-// .block2 {
-//     width:500px;
-//     height:100px;
-//     background:green;
-//     clip-path: polygon(
-//         0 50%,
-//         10% 0,
-//         100% 0,
-//         100% 100%,
-//         10% 100%
-//       )
-// }
-
-// .block3 {
-//     width:500px;
-//     height:100px;
-//     background:blue;
-//     clip-path: polygon(
-//         0% 0%,
-//         90% 0,
-//         100% 50%,
-//         90% 100%,
-//         0% 100%
-//       )
-// }
 
 let windowIsBigEnough = true
 function checkMinimumWindowSize(){
