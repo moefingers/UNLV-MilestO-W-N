@@ -3,23 +3,43 @@
 }
 
 .fullBlock {
-    width:500px;
+    width:100px;
     height:100px;
     background:red;
+    opacity:0.3;
     clip-path: polygon(
-        0 50%,
-        10% 0,
-        90% 0,
-        100% 50%,
-        90% 100%,
-        10% 100%
-      )
+        0 0,
+        1% 0,
+        8% 7%,
+
+        92% 7%,
+        99% 0%,
+        100% 0%,
+        100% 1%,
+        93% 8%,
+
+        93% 92%,
+        100% 99%,
+        100% 100%,
+        99% 100%,
+        92% 93%,
+
+        8% 93%,
+        1% 100%,
+        0% 100%,
+        0% 99%,
+        7% 92%,
+
+        7% 8%,
+        0% 1%
+      );
 }
 
 
 .containHalfBlocks {
     display:flex;
-    margin: 10px;
+    margin: 0 2px;
+    /* outline: solid black 1px */
 }
 
 .halfBlockStart {

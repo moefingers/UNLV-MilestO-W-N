@@ -1,39 +1,154 @@
 //define block size for everything
-let blockSizeStyle = {"length":50, "girth":10}
+let fullBlockSizeStyle = {"length":96, "girth":10}
 
 // making some classes for types of players
-let halfBlockStartStyleGreen = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:green;`
-let halfBlockEndStyleGreen = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:green;`
+let halfBlockStartStyleGreen = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:green;`
+let halfBlockEndStyleGreen = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:green;`
 
-let halfBlockStartStyleRed = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:red;`
-let halfBlockEndStyleRed = `width:${blockSizeStyle.length}px;height:${blockSizeStyle.girth}px;background:red;`
+let halfBlockStartStyleRed = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:red;`
+let halfBlockEndStyleRed = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:red;`
 
 
 // map
-let map1 = {"rows": {"row1": [0,1,1,1,1,]}}
+let map1 = [
+  [0, 1, 1, 1, 1, 0],
+  [1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1],
+  [0, 1, 1, 1, 1, 0],
+];
 
-let block2 = document.createElement("div")
-block2.className = "halfBlockStart"
-block2.style = halfBlockStartStyleGreen
+//load map
+function loadMap(map){
+    console.log(map.length)
+    for(let row = 0; row < map.length; row++){
+        let currentRow = (map[row])
+        for(let block = 0; block < currentRow.length; block++){
+            let blockActive = (currentRow[block])
+            console.log(blockActive) //this will return 1 or 0 if block active or not
+            if (blockActive == true){
+                console.log("block active")
+            } else if (blockActive == false){
+                console.log("block not active")
+            }
+        }
+    }
+// map.forEach(row => {
+//     console.log("row")
+//     row.forEach(item => {
+//         console.log(item)
+//     })
+// });
+}
 
-let block3 = document.createElement("div")
-block3.className = "halfBlockEnd"
-block3.style = halfBlockEndStyleRed
+//exampleTop
+let exampleTopStart = document.createElement("div")
+exampleTopStart.className = "halfBlockStart"
+exampleTopStart.style = halfBlockStartStyleGreen
 
-let container1 = document.createElement("div")
-container1.className = "containHalfBlocks"
+let exampleTopEnd = document.createElement("div")
+exampleTopEnd.className = "halfBlockEnd"
+exampleTopEnd.style = halfBlockEndStyleRed
 
-let container2 = document.createElement("div")
-container2.className = "containHalfBlocks"
+let exampleTop = document.createElement("div")
+exampleTop.className = "containHalfBlocks"
+exampleTop.style.width = `${fullBlockSizeStyle.length}px`
+exampleTop.style.position ="absolute"
+exampleTop.style.transformOrigin = "0px 0px"
+exampleTop.style.translate = "0px -5px"
 
-container1.append(block2)
-container1.append(block3)
+exampleTop.append(exampleTopStart)
+exampleTop.append(exampleTopEnd)
 
-container2.append(block2)
-container2.append(block3)
+document.getElementById("mapAreaExample").append(exampleTop)
 
-document.getElementById("mapArea").append(container1)
-document.getElementById("mapArea").append(container2)
+//exampleLeft
+let exampleLeftStart = document.createElement("div")
+exampleLeftStart.className = "halfBlockStart"
+exampleLeftStart.style = halfBlockStartStyleGreen
+
+let exampleLeftEnd = document.createElement("div")
+exampleLeftEnd.className = "halfBlockEnd"
+exampleLeftEnd.style = halfBlockEndStyleRed
+
+
+let exampleLeft = document.createElement("div")
+exampleLeft.className = "containHalfBlocks"
+exampleLeft.style.width = `${fullBlockSizeStyle.length}px`
+exampleLeft.style.position ="absolute"
+exampleLeft.style.transformOrigin = "0px 0px"
+exampleLeft.style.translate = "3px 2px"
+exampleLeft.style.rotate = "90deg"
+
+exampleLeft.append(exampleLeftStart)
+exampleLeft.append(exampleLeftEnd)
+
+document.getElementById("mapAreaExample").append(exampleLeft)
+
+//exampleRight
+let exampleRightStart = document.createElement("div")
+exampleRightStart.className = "halfBlockStart"
+exampleRightStart.style = halfBlockStartStyleGreen
+
+let exampleRightEnd = document.createElement("div")
+exampleRightEnd.className = "halfBlockEnd"
+exampleRightEnd.style = halfBlockEndStyleRed
+
+
+let exampleRight = document.createElement("div")
+exampleRight.className = "containHalfBlocks"
+exampleRight.style.width = `${fullBlockSizeStyle.length}px`
+exampleRight.style.position ="absolute"
+exampleRight.style.transformOrigin = "0 0"
+exampleRight.style.rotate = "90deg"
+exampleRight.style.translate = "103px 2px"
+
+exampleRight.append(exampleRightStart)
+exampleRight.append(exampleRightEnd)
+
+document.getElementById("mapAreaExample").append(exampleRight)
+
+//exampleBottom
+let exampleBottomStart = document.createElement("div")
+exampleBottomStart.className = "halfBlockStart"
+exampleBottomStart.style = halfBlockStartStyleGreen
+
+let exampleBottomEnd = document.createElement("div")
+exampleBottomEnd.className = "halfBlockEnd"
+exampleBottomEnd.style = halfBlockEndStyleRed
+
+
+let exampleBottom = document.createElement("div")
+exampleBottom.className = "containHalfBlocks"
+exampleBottom.style.width = `${fullBlockSizeStyle.length}px`
+exampleBottom.style.position ="absolute"
+exampleBottom.style.transformOrigin = "0px 0px"
+exampleBottom.style.translate = "0 95px"
+
+exampleBottom.append(exampleBottomStart)
+exampleBottom.append(exampleBottomEnd)
+
+document.getElementById("mapAreaExample").append(exampleBottom)
+
+
+//exampleBlock
+let exampleBlock = document.createElement("div")
+exampleBlock.className = "fullBlock"
+exampleBlock.style.position ="absolute"
+exampleBlock.style.transformOrigin = "0px 0px"
+exampleBlock.style.translate = "0px 0px"
+
+document.getElementById("mapAreaExample").append(exampleBlock)
+//exampleBlock2
+let exampleBlock2 = document.createElement("div")
+exampleBlock2.className = "fullBlock"
+exampleBlock2.style.background = "green"
+exampleBlock2.style.position ="absolute"
+exampleBlock2.style.transformOrigin = "0px 0px"
+exampleBlock2.style.translate = "100px 0px"
+
+document.getElementById("mapAreaExample").append(exampleBlock2)
 
 
 let windowIsBigEnough = true
@@ -48,17 +163,20 @@ function checkMinimumWindowSize(){
         if(window.innerHeight < heightValue && window.innerWidth < widthValue){widthOrHeightProblem = "wider and taller"}
         else if (window.innerHeight < heightValue) {widthOrHeightProblem = "taller"}
         else if (window.innerWidth < widthValue) {widthOrHeightProblem = "wider"}
-        document.getElementById("windowSizeWarning").textContent(`Please make me ${widthOrHeightProblem} to play the game.`)
+        document.getElementById("windowSizeWarning").textContent = (`Please make me ${widthOrHeightProblem} to play the game. - Sincerely, the window.`)
     } else if (window.innerHeight >= heightValue && window.innerWidth >= widthValue && windowIsBigEnough === false){
         console.log(`Page has become large enough as ${window.innerHeight} and ${window.innerWidth}`)
-
+        document.getElementById("windowSizeWarning").textContent = ""
         windowIsBigEnough = true
         document.getElementById("mapArea").style = "opacity: 1"
     } else if (window.innerHeight >= heightValue && window.innerWidth >= widthValue && windowIsBigEnough === true){
         console.log(`Page still large enough as ${window.innerHeight} and ${window.innerWidth}`)
-        //do not reload page
+        document.getElementById("windowSizeWarning").textContent = ""
     }
 }
 
-window.onresize = checkMinimumWindowSize
-checkMinimumWindowSize()
+//window.onresize = checkMinimumWindowSize
+//checkMinimumWindowSize()
+// UNCOMMENT THESE ^
+
+loadMap(map1)
