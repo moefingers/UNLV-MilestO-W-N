@@ -2,7 +2,7 @@
     color:red;
 }
 
-.fullBlock {
+.controlBlock {
     width:100px;
     height:100px;
     background:red;
@@ -36,13 +36,13 @@
 }
 
 
-.containHalfBlocks {
+.halfEdgeContainer {
     display:flex;
     margin: 0 2px;
     /* outline: solid black 1px */
 }
 
-.halfBlockStart {
+.halfEdgeStart {
     clip-path: polygon(
         0 50%,
         10% 0,
@@ -53,7 +53,7 @@
       
 }
 
-.halfBlockEnd {
+.halfEdgeEnd {
     clip-path: polygon(
         0% 0%,
         90% 0,

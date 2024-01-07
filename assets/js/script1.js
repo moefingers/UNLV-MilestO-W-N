@@ -1,12 +1,12 @@
 //define block size for everything
-let fullBlockSizeStyle = {"length":96, "girth":10}
+let fullEdgeSizeStyle = {"length":96, "girth":10}
 
 // making some classes for types of players
-let halfBlockStartStyleGreen = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:green;`
-let halfBlockEndStyleGreen = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:green;`
+let halfEdgeStartStyleGreen = `width:${fullEdgeSizeStyle.length/2}px;height:${fullEdgeSizeStyle.girth}px;background:green;`
+let halfEdgeEndStyleGreen = `width:${fullEdgeSizeStyle.length/2}px;height:${fullEdgeSizeStyle.girth}px;background:green;`
 
-let halfBlockStartStyleRed = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:red;`
-let halfBlockEndStyleRed = `width:${fullBlockSizeStyle.length/2}px;height:${fullBlockSizeStyle.girth}px;background:red;`
+let halfEdgeStartStyleRed = `width:${fullEdgeSizeStyle.length/2}px;height:${fullEdgeSizeStyle.girth}px;background:red;`
+let halfEdgeEndStyleRed = `width:${fullEdgeSizeStyle.length/2}px;height:${fullEdgeSizeStyle.girth}px;background:red;`
 
 
 // map
@@ -16,44 +16,50 @@ let map1 = [
   [1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1],
-  [0, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 0], //using numbers instead of bool for writability
 ];
 
 //load map
-function loadMap(map){
-    console.log(map.length)
-    for(let row = 0; row < map.length; row++){
-        let currentRow = (map[row])
-        for(let block = 0; block < currentRow.length; block++){
-            let blockActive = (currentRow[block])
+function loadMap(map){ //accept map as parameter when invoking
+    for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
+        let currentRow = (map[selectedRow]) //select row from map (for readability)
+        for(let selectedBlock = 0; selectedBlock < currentRow.length; selectedBlock++){// intialize block number as 0, select blocks while less than map.length, etc.
+            let blockActive = (currentRow[selectedBlock])// value determined by data in array, block found in row.. (also for readability)
             console.log(blockActive) //this will return 1 or 0 if block active or not
-            if (blockActive == true){
+            
+            let controlPseudoCoordinates = [selectedBlock + 1,selectedRow + 1]
+            if (blockActive == true){ // this value will actually be 1, but using boolean for readability
                 console.log("block active")
+                let locationX = selectedBlock * 100
+                let locationY = selectedRow * 100
+                //make block
+                let control = document.createElement("div")
+                control.id = `x${locationX}y${locationY}`
+                control.className = "controlBlock"
+                control.style.position ="absolute"
+                control.style.transformOrigin = "0px 0px"
+                control.style.translate = `${locationX}px ${locationY}px`
+                document.getElementById("mapArea").append(control)
+
             } else if (blockActive == false){
                 console.log("block not active")
             }
         }
     }
-// map.forEach(row => {
-//     console.log("row")
-//     row.forEach(item => {
-//         console.log(item)
-//     })
-// });
 }
 
 //exampleTop
 let exampleTopStart = document.createElement("div")
-exampleTopStart.className = "halfBlockStart"
-exampleTopStart.style = halfBlockStartStyleGreen
+exampleTopStart.className = "halfEdgeStart"
+exampleTopStart.style = halfEdgeStartStyleGreen
 
 let exampleTopEnd = document.createElement("div")
-exampleTopEnd.className = "halfBlockEnd"
-exampleTopEnd.style = halfBlockEndStyleRed
+exampleTopEnd.className = "halfEdgeEnd"
+exampleTopEnd.style = halfEdgeEndStyleRed
 
 let exampleTop = document.createElement("div")
-exampleTop.className = "containHalfBlocks"
-exampleTop.style.width = `${fullBlockSizeStyle.length}px`
+exampleTop.className = "halfEdgeContainer"
+exampleTop.style.width = `${fullEdgeSizeStyle.length}px`
 exampleTop.style.position ="absolute"
 exampleTop.style.transformOrigin = "0px 0px"
 exampleTop.style.translate = "0px -5px"
@@ -65,17 +71,17 @@ document.getElementById("mapAreaExample").append(exampleTop)
 
 //exampleLeft
 let exampleLeftStart = document.createElement("div")
-exampleLeftStart.className = "halfBlockStart"
-exampleLeftStart.style = halfBlockStartStyleGreen
+exampleLeftStart.className = "halfEdgeStart"
+exampleLeftStart.style = halfEdgeStartStyleGreen
 
 let exampleLeftEnd = document.createElement("div")
-exampleLeftEnd.className = "halfBlockEnd"
-exampleLeftEnd.style = halfBlockEndStyleRed
+exampleLeftEnd.className = "halfEdgeEnd"
+exampleLeftEnd.style = halfEdgeEndStyleRed
 
 
 let exampleLeft = document.createElement("div")
-exampleLeft.className = "containHalfBlocks"
-exampleLeft.style.width = `${fullBlockSizeStyle.length}px`
+exampleLeft.className = "halfEdgeContainer"
+exampleLeft.style.width = `${fullEdgeSizeStyle.length}px`
 exampleLeft.style.position ="absolute"
 exampleLeft.style.transformOrigin = "0px 0px"
 exampleLeft.style.translate = "3px 2px"
@@ -88,17 +94,17 @@ document.getElementById("mapAreaExample").append(exampleLeft)
 
 //exampleRight
 let exampleRightStart = document.createElement("div")
-exampleRightStart.className = "halfBlockStart"
-exampleRightStart.style = halfBlockStartStyleGreen
+exampleRightStart.className = "halfEdgeStart"
+exampleRightStart.style = halfEdgeStartStyleGreen
 
 let exampleRightEnd = document.createElement("div")
-exampleRightEnd.className = "halfBlockEnd"
-exampleRightEnd.style = halfBlockEndStyleRed
+exampleRightEnd.className = "halfEdgeEnd"
+exampleRightEnd.style = halfEdgeEndStyleRed
 
 
 let exampleRight = document.createElement("div")
-exampleRight.className = "containHalfBlocks"
-exampleRight.style.width = `${fullBlockSizeStyle.length}px`
+exampleRight.className = "halfEdgeContainer"
+exampleRight.style.width = `${fullEdgeSizeStyle.length}px`
 exampleRight.style.position ="absolute"
 exampleRight.style.transformOrigin = "0 0"
 exampleRight.style.rotate = "90deg"
@@ -111,17 +117,17 @@ document.getElementById("mapAreaExample").append(exampleRight)
 
 //exampleBottom
 let exampleBottomStart = document.createElement("div")
-exampleBottomStart.className = "halfBlockStart"
-exampleBottomStart.style = halfBlockStartStyleGreen
+exampleBottomStart.className = "halfEdgeStart"
+exampleBottomStart.style = halfEdgeStartStyleGreen
 
 let exampleBottomEnd = document.createElement("div")
-exampleBottomEnd.className = "halfBlockEnd"
-exampleBottomEnd.style = halfBlockEndStyleRed
+exampleBottomEnd.className = "halfEdgeEnd"
+exampleBottomEnd.style = halfEdgeEndStyleRed
 
 
 let exampleBottom = document.createElement("div")
-exampleBottom.className = "containHalfBlocks"
-exampleBottom.style.width = `${fullBlockSizeStyle.length}px`
+exampleBottom.className = "halfEdgeContainer"
+exampleBottom.style.width = `${fullEdgeSizeStyle.length}px`
 exampleBottom.style.position ="absolute"
 exampleBottom.style.transformOrigin = "0px 0px"
 exampleBottom.style.translate = "0 95px"
@@ -134,7 +140,7 @@ document.getElementById("mapAreaExample").append(exampleBottom)
 
 //exampleBlock
 let exampleBlock = document.createElement("div")
-exampleBlock.className = "fullBlock"
+exampleBlock.className = "controlBlock"
 exampleBlock.style.position ="absolute"
 exampleBlock.style.transformOrigin = "0px 0px"
 exampleBlock.style.translate = "0px 0px"
@@ -142,7 +148,7 @@ exampleBlock.style.translate = "0px 0px"
 document.getElementById("mapAreaExample").append(exampleBlock)
 //exampleBlock2
 let exampleBlock2 = document.createElement("div")
-exampleBlock2.className = "fullBlock"
+exampleBlock2.className = "controlBlock"
 exampleBlock2.style.background = "green"
 exampleBlock2.style.position ="absolute"
 exampleBlock2.style.transformOrigin = "0px 0px"
