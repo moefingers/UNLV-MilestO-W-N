@@ -24,30 +24,55 @@ function loadMap(map){ //accept map as parameter when invoking
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRow = (map[selectedRow]) //select row from map (for readability)
         for(let selectedBlock = 0; selectedBlock < currentRow.length; selectedBlock++){// intialize block number as 0, select blocks while less than map.length, etc.
-            let blockActive = (currentRow[selectedBlock])// value determined by data in array, block found in row.. (also for readability)
-            console.log(blockActive) //this will return 1 or 0 if block active or not
-            
-            let controlPseudoCoordinates = [selectedBlock + 1,selectedRow + 1]
-            if (blockActive == true){ // this value will actually be 1, but using boolean for readability
-                console.log("block active")
+            let controlProperties = {
+              active: currentRow[selectedBlock],
+              pseudoCoordinates: [selectedBlock + 1,selectedRow + 1]
+            };
+            if (controlProperties.active == true){ // this value will actually be 1, but using boolean for readability
+                console.log(`${controlProperties.pseudoCoordinates} active`)
                 let locationX = selectedBlock * 100
                 let locationY = selectedRow * 100
-                //make block
+                // MAKE BLOCK
                 let control = document.createElement("div")
-                control.id = `x${locationX}y${locationY}`
+                control.id = `control-x${controlProperties.pseudoCoordinates[0]}-y${controlProperties.pseudoCoordinates[1]}`
                 control.className = "controlBlock"
                 control.style.position ="absolute"
                 control.style.transformOrigin = "0px 0px"
                 control.style.translate = `${locationX}px ${locationY}px`
                 document.getElementById("mapArea").append(control)
 
-            } else if (blockActive == false){
-                console.log("block not active")
+                // MAKE TOP EDGE
+                let controlTopStart = document.createElement("div")
+                controlTopStart.className = "halfEdgeStart"
+                controlTopStart.style = halfEdgeStartStyleGreen
+
+                let controlTopEnd = document.createElement("div")
+                controlTopEnd.className = "halfEdgeEnd"
+                controlTopEnd.style = halfEdgeEndStyleRed
+
+                let controlTop = document.createElement("div")
+                controlTop.id = `controlTop-x${controlProperties.pseudoCoordinates[0]}-y${controlProperties.pseudoCoordinates[1]}`
+                controlTop.className = "halfEdgeContainer"
+                controlTop.style.width = `${fullEdgeSizeStyle.length}px`
+                controlTop.style.position ="absolute"
+                controlTop.style.transformOrigin = "0px 0px"
+                controlTop.style.translate = `${locationX}px ${locationY -5}px`
+
+                controlTop.append(controlTopStart)
+                controlTop.append(controlTopEnd)
+
+                document.getElementById("mapArea").append(controlTop)
+
+
+            } else if (controlProperties.active == false){
+                console.log(`${controlProperties.pseudoCoordinates} not active`)
             }
         }
     }
 }
 
+
+//EXAMPLE BEGIN
 //exampleTop
 let exampleTopStart = document.createElement("div")
 exampleTopStart.className = "halfEdgeStart"
@@ -155,7 +180,8 @@ exampleBlock2.style.transformOrigin = "0px 0px"
 exampleBlock2.style.translate = "100px 0px"
 
 document.getElementById("mapAreaExample").append(exampleBlock2)
-
+document.getElementById("mapAreaExample").style.display = "none" // TO REMOVE EXAMPLE
+//EXAMPLE END
 
 let windowIsBigEnough = true
 function checkMinimumWindowSize(){
