@@ -12,9 +12,9 @@ let halfEdgeEndStyleRed = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSiz
 
 // map
 let map1 = [
-  [0, 1, 1, 1, 1, 0],
-  [1, 1, 1, 1, 0, 1],
-  [1, 1, 0, 1, 1, 1],
+  [0, 1, 1, 0, 1, 0],
+  [1, 1, 1, 0, 1, 1],
+  [1, 1, 0, 0, 1, 1],
   [1, 1, 0, 0, 1, 1],
   [1, 1, 1, 1, 1, 1],
   [0, 1, 1, 1, 1, 0], //using numbers instead of bool for writability
@@ -128,118 +128,6 @@ function loadMap(map){ //accept map as parameter when invoking
         }
     }
 }
-
-
-//EXAMPLE BEGIN
-//exampleTop
-let exampleTopStart = document.createElement("div")
-exampleTopStart.className = "halfEdgeStart"
-exampleTopStart.style = halfEdgeStartStyleGreen
-
-let exampleTopEnd = document.createElement("div")
-exampleTopEnd.className = "halfEdgeEnd"
-exampleTopEnd.style = halfEdgeEndStyleRed
-
-let exampleTop = document.createElement("div")
-exampleTop.className = "halfEdgeContainer"
-exampleTop.style.width = `${fullEdgeSize.length}px`
-exampleTop.style.position ="absolute"
-exampleTop.style.transformOrigin = "0px 0px"
-exampleTop.style.translate = "0px -5px"
-
-exampleTop.append(exampleTopStart)
-exampleTop.append(exampleTopEnd)
-
-document.getElementById("mapAreaExample").append(exampleTop)
-
-//exampleLeft
-let exampleLeftStart = document.createElement("div")
-exampleLeftStart.className = "halfEdgeStart"
-exampleLeftStart.style = halfEdgeStartStyleGreen
-
-let exampleLeftEnd = document.createElement("div")
-exampleLeftEnd.className = "halfEdgeEnd"
-exampleLeftEnd.style = halfEdgeEndStyleRed
-
-
-let exampleLeft = document.createElement("div")
-exampleLeft.className = "halfEdgeContainer"
-exampleLeft.style.width = `${fullEdgeSize.length}px`
-exampleLeft.style.position ="absolute"
-exampleLeft.style.transformOrigin = "0px 0px"
-exampleLeft.style.translate = "3px 2px"
-exampleLeft.style.rotate = "90deg"
-
-exampleLeft.append(exampleLeftStart)
-exampleLeft.append(exampleLeftEnd)
-
-document.getElementById("mapAreaExample").append(exampleLeft)
-
-//exampleRight
-let exampleRightStart = document.createElement("div")
-exampleRightStart.className = "halfEdgeStart"
-exampleRightStart.style = halfEdgeStartStyleGreen
-
-let exampleRightEnd = document.createElement("div")
-exampleRightEnd.className = "halfEdgeEnd"
-exampleRightEnd.style = halfEdgeEndStyleRed
-
-
-let exampleRight = document.createElement("div")
-exampleRight.className = "halfEdgeContainer"
-exampleRight.style.width = `${fullEdgeSize.length}px`
-exampleRight.style.position ="absolute"
-exampleRight.style.transformOrigin = "0 0"
-exampleRight.style.rotate = "90deg"
-exampleRight.style.translate = "103px 2px"
-
-exampleRight.append(exampleRightStart)
-exampleRight.append(exampleRightEnd)
-
-document.getElementById("mapAreaExample").append(exampleRight)
-
-//exampleBottom
-let exampleBottomStart = document.createElement("div")
-exampleBottomStart.className = "halfEdgeStart"
-exampleBottomStart.style = halfEdgeStartStyleGreen
-
-let exampleBottomEnd = document.createElement("div")
-exampleBottomEnd.className = "halfEdgeEnd"
-exampleBottomEnd.style = halfEdgeEndStyleRed
-
-
-let exampleBottom = document.createElement("div")
-exampleBottom.className = "halfEdgeContainer"
-exampleBottom.style.width = `${fullEdgeSize.length}px`
-exampleBottom.style.position ="absolute"
-exampleBottom.style.transformOrigin = "0px 0px"
-exampleBottom.style.translate = "0 95px"
-
-exampleBottom.append(exampleBottomStart)
-exampleBottom.append(exampleBottomEnd)
-
-document.getElementById("mapAreaExample").append(exampleBottom)
-
-
-//exampleBlock
-let exampleBlock = document.createElement("div")
-exampleBlock.className = "controlBlock"
-exampleBlock.style.position ="absolute"
-exampleBlock.style.transformOrigin = "0px 0px"
-exampleBlock.style.translate = "0px 0px"
-
-document.getElementById("mapAreaExample").append(exampleBlock)
-//exampleBlock2
-let exampleBlock2 = document.createElement("div")
-exampleBlock2.className = "controlBlock"
-exampleBlock2.style.background = "green"
-exampleBlock2.style.position ="absolute"
-exampleBlock2.style.transformOrigin = "0px 0px"
-exampleBlock2.style.translate = "100px 0px"
-
-document.getElementById("mapAreaExample").append(exampleBlock2)
-document.getElementById("mapAreaExample").style.display = "none" // TO REMOVE EXAMPLE
-//EXAMPLE END
 
 let windowIsBigEnough = true
 function checkMinimumWindowSize(){
