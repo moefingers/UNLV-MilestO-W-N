@@ -1,13 +1,24 @@
 //define block size for everything
-let fullEdgeSize = {"length":96, "girth":10}
-let fullControlSize = 100
+let fullControlSize = 750/8
+let controlOffset = 2
+let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":10}
 
+
+
+let controlBlockStyleGeneric = `background:gray;opacity:0.3;`
 // making some classes for types of players
-let halfEdgeStartStyleGreen = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:green;`
-let halfEdgeEndStyleGreen = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:green;`
+let halfEdgeStartStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
+let halfEdgeEndStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
 
-let halfEdgeStartStyleRed = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:red;`
-let halfEdgeEndStyleRed = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:red;`
+
+let halfEdgeStartStyleGreen = `${halfEdgeStartStyleGeneric}green;`
+let halfEdgeEndStyleGreen = `${halfEdgeEndStyleGeneric}green;`
+
+let halfEdgeStartStyleRed = `${halfEdgeStartStyleGeneric}red;`
+let halfEdgeEndStyleRed = `${halfEdgeEndStyleGeneric}red;`
+
+let halfEdgeStartStyleGray = `${halfEdgeStartStyleGeneric}gray;`
+let halfEdgeEndStyleGray = `${halfEdgeEndStyleGeneric}gray;`
 
 
 // map
@@ -19,6 +30,22 @@ let map1 = [
   [1, 1, 1, 1, 1, 1],
   [0, 1, 1, 1, 1, 0], //using numbers instead of bool for writability
 ];
+let map2 = [
+    [1, 1, 1, 0, 1, 0, 1, 0],
+    [0, 1, 1, 0, 1, 0, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 0, 1, 0, 1, 0],
+  ];
+
+  let map3 = [
+    [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+    [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+    [1, 0, 0, 0, 1, 0, 1, 0, 1, 1],
+    [1, 0, 1, 0, 1, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+    [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+  ];
 
 //load map
 function loadMap(map){ //accept map as parameter when invoking
@@ -37,7 +64,7 @@ function loadMap(map){ //accept map as parameter when invoking
             };
             if(selectedBlock + 1 >= currentRowArray.length ){rightControlProperties.active = 0}
             else if (selectedBlock < currentRowArray.length) {rightControlProperties.active = currentRowArray[selectedBlock + 1]}
-            console.log(`${rightControlProperties.pseudoCoordinates} active: ${rightControlProperties.active}`)
+            //console.log(`${rightControlProperties.pseudoCoordinates} active: ${rightControlProperties.active}`)
 
             let belowControlProperties = {
             active: "", //this row will not exist since it is after everything
@@ -45,16 +72,19 @@ function loadMap(map){ //accept map as parameter when invoking
             };
             if(selectedRow + 1 >= map.length ){belowControlProperties.active = 0}
             else if (selectedRow < map.length) {belowControlProperties.active = map[selectedRow + 1][selectedBlock]}
-            console.log(`${belowControlProperties.pseudoCoordinates} active: ${belowControlProperties.active}`)
+            //console.log(`${belowControlProperties.pseudoCoordinates} active: ${belowControlProperties.active}`)
 
             if (controlProperties.active == true){ // this value will actually be 1, but using boolean for readability
-                console.log(`${controlProperties.pseudoCoordinates} active`)
+                //console.log(`${controlProperties.pseudoCoordinates} active`)
                 let locationX = selectedBlock * fullControlSize
                 let locationY = selectedRow * fullControlSize
                 // MAKE BLOCK
                 let control = document.createElement("div")
                 control.id = `control-x${controlProperties.pseudoCoordinates[0]}-y${controlProperties.pseudoCoordinates[1]}`
                 control.className = "controlBlock"
+                control.style = controlBlockStyleGeneric
+                control.style.width = `${fullControlSize}px`
+                control.style.height = `${fullControlSize}px`
                 control.style.position ="absolute"
                 control.style.transformOrigin = "0px 0px"
                 control.style.translate = `${locationX}px ${locationY}px`
@@ -65,12 +95,12 @@ function loadMap(map){ //accept map as parameter when invoking
                     let controlHorizontalStart = document.createElement("div")
                     controlHorizontalStart.id = `controlHorizontalStart-x${controlCoordinates[0]}-y${controlCoordinates[1]}`
                     controlHorizontalStart.className = "halfEdgeStart"
-                    controlHorizontalStart.style = halfEdgeStartStyleGreen
+                    controlHorizontalStart.style = halfEdgeStartStyleGray
 
                     let controlHorizontalEnd = document.createElement("div")
                     controlHorizontalEnd.id = `controlHorizontalEnd-x${controlCoordinates[0]}-y${controlCoordinates[1]}`
                     controlHorizontalEnd.className = "halfEdgeEnd"
-                    controlHorizontalEnd.style = halfEdgeEndStyleRed
+                    controlHorizontalEnd.style = halfEdgeEndStyleGray
 
                     let controlHorizontal = document.createElement("div")
                     controlHorizontal.id = `controlHorizontal-x${controlCoordinates[0]}-y${controlCoordinates[1]}`
@@ -78,7 +108,7 @@ function loadMap(map){ //accept map as parameter when invoking
                     controlHorizontal.style.width = `${fullEdgeSize.length}px`
                     controlHorizontal.style.position ="absolute"
                     controlHorizontal.style.transformOrigin = "0px 0px"
-                    controlHorizontal.style.translate = `${locationX}px ${locY -5}px`
+                    controlHorizontal.style.translate = `${locationX + controlOffset}px ${locY -(fullEdgeSize.girth /2)}px`
 
                     controlHorizontal.append(controlHorizontalStart)
                     controlHorizontal.append(controlHorizontalEnd)
@@ -90,12 +120,12 @@ function loadMap(map){ //accept map as parameter when invoking
                     let controlVerticalStart = document.createElement("div")
                     controlVerticalStart.id = `controlVerticalStart-x${controlCoordinates[0]}-y${controlCoordinates[1]}`
                     controlVerticalStart.className = "halfEdgeStart"
-                    controlVerticalStart.style = halfEdgeStartStyleGreen
+                    controlVerticalStart.style = halfEdgeStartStyleGray
 
                     let controlVerticalEnd = document.createElement("div")
                     controlVerticalEnd.id = `controlVerticalEnd-x${controlCoordinates[0]}-y${controlCoordinates[1]}`
                     controlVerticalEnd.className = "halfEdgeEnd"
-                    controlVerticalEnd.style = halfEdgeEndStyleRed
+                    controlVerticalEnd.style = halfEdgeEndStyleGray
 
                     let controlVertical = document.createElement("div")
                     controlVertical.id = `controlVertical-x${controlCoordinates[0]}-y${controlCoordinates[1]}`
@@ -104,7 +134,7 @@ function loadMap(map){ //accept map as parameter when invoking
                     controlVertical.style.position ="absolute"
                     controlVertical.style.transformOrigin = "0px 0px"
                     controlVertical.style.rotate = "90deg"
-                    controlVertical.style.translate = `${locX+3}px ${locationY +2}px`
+                    controlVertical.style.translate = `${locX +(fullEdgeSize.girth /2)}px ${locationY +controlOffset}px`
 
                     controlVertical.append(controlVerticalStart)
                     controlVertical.append(controlVerticalEnd)
@@ -112,18 +142,16 @@ function loadMap(map){ //accept map as parameter when invoking
                     document.getElementById("mapArea").append(controlVertical)
                 }
                 verticalEdge(controlProperties.pseudoCoordinates, locationX)
-                console.log(rightControlProperties.active)
                 if(rightControlProperties.active == false){
                     verticalEdge(rightControlProperties.pseudoCoordinates, (locationX + fullControlSize))
                 }
                 horizontalEdge(controlProperties.pseudoCoordinates, locationY)
-                console.log(belowControlProperties.active)
                 if(belowControlProperties.active == false){
                     horizontalEdge(belowControlProperties.pseudoCoordinates, (locationY + fullControlSize))
                 }
                
             } else if (controlProperties.active == false){
-                console.log(`${controlProperties.pseudoCoordinates} not active`)
+                //console.log(`${controlProperties.pseudoCoordinates} not active`)
             }
         }
     }
@@ -153,8 +181,8 @@ function checkMinimumWindowSize(){
     }
 }
 
-//window.onresize = checkMinimumWindowSize
-//checkMinimumWindowSize()
+window.onresize = checkMinimumWindowSize
+checkMinimumWindowSize()
 // UNCOMMENT THESE ^
 
-loadMap(map1)
+loadMap(map3)
