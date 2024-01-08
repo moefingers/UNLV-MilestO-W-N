@@ -5,7 +5,7 @@ const heightValue = 750 //needs to include 40px for header
 
 
 
-// map
+// maps
 let map4x2 = [
     [1,1,1,1],
     [1,1,1,1],
@@ -50,7 +50,7 @@ let map00 = [
     [1],
     [1],
     [1],
-  ];
+];
 
 let map0 = [
   [1, 1, 1, 1],
@@ -73,7 +73,7 @@ let map2 = [
     [1, 1, 1, 0, 1, 0, 1, 1],
   ];
 
-  let map3 = [
+let map3 = [
     [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
     [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
     [1, 0, 0, 0, 1, 0, 1, 0, 1, 1],
@@ -81,56 +81,58 @@ let map2 = [
     [1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
     [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
     [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
-  ];
+];
 
-  let map4 = [
+let map4 = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 0, 1, 1, 0, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 0, 1, 1, 0, 1, 1],
-  ];
+];
 
 //load map
 function loadMap(map){ //accept map as parameter when invoking
+    let characterSize = 3
+    let controlOffset = 2            
+
+    let fullControlSize //initialize variable for later if statement
+    let hOw = heightValue/widthValue
+    let wOh = widthValue/heightValue //for readability
+
+    if ((map.length * wOh)>= (map[0].length* hOw)){ // dynamic adjustment for individual control size for map window.. if width and height do not equal then this must exist
+        fullControlSize = (heightValue - 40 - 20)/map.length
+    } else if ((map.length * wOh)< (map[0].length* hOw)){
+        fullControlSize = (widthValue - 40)/map[0].length
+    }
+    let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":fullControlSize/13} // edge sizing for each control TBD dynamic girth
+
+    // making some classes for types of players' areas
+    const controlBlockStyleGeneric = `background:gray;opacity:0.3;`
+    
+    let halfEdgeStartStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
+    let halfEdgeEndStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
+    
+    
+    let halfEdgeStartStyleGreen = `${halfEdgeStartStyleGeneric}green;`
+    let halfEdgeEndStyleGreen = `${halfEdgeEndStyleGeneric}green;`
+    
+    let halfEdgeStartStyleRed = `${halfEdgeStartStyleGeneric}red;`
+    let halfEdgeEndStyleRed = `${halfEdgeEndStyleGeneric}red;`
+    
+    let halfEdgeStartStyleGray = `${halfEdgeStartStyleGeneric}gray;`
+    let halfEdgeEndStyleGray = `${halfEdgeEndStyleGeneric}gray;`
+
+
+    document.getElementById("mapArea").style.width = (`${(map[0].length) * fullControlSize}px`) //setting map width and height based on amount of controls
+    document.getElementById("mapArea").style.height = (`${(map.length) * fullControlSize}px`)
+    document.getElementById("mapArea").style.left = ("50%") // 50% of the whole body
+    document.getElementById("mapArea").style.translate = ("-50% 0") // 50% of the map
+
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRowArray = (map[selectedRow]) //select row from map (for readability)
         for(let selectedBlock = 0; selectedBlock < currentRowArray.length; selectedBlock++){// intialize block number as 0, select blocks while less than map.length, etc.
 
-            let characterSize = 3
-            let controlOffset = 2            
-
-            let fullControlSize //initialize variable for later if statement
-            let hOw = heightValue/widthValue
-            let wOh = widthValue/heightValue //for readability
-
-            if ((map.length * wOh)>= (currentRowArray.length* hOw)){ // dynamic adjustment for individual control size for map window.. if width and height do not equal then this must exist
-                fullControlSize = (heightValue - 40 - 20)/map.length
-            } else if ((map.length * wOh)< (currentRowArray.length* hOw)){
-                fullControlSize = (widthValue - 40)/currentRowArray.length
-            }
-            let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":fullControlSize/13} // edge sizing for each control TBD dynamic girth
-
-            // making some classes for types of players' areas
-            const controlBlockStyleGeneric = `background:gray;opacity:0.3;`
             
-            let halfEdgeStartStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
-            let halfEdgeEndStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
-            
-            
-            let halfEdgeStartStyleGreen = `${halfEdgeStartStyleGeneric}green;`
-            let halfEdgeEndStyleGreen = `${halfEdgeEndStyleGeneric}green;`
-            
-            let halfEdgeStartStyleRed = `${halfEdgeStartStyleGeneric}red;`
-            let halfEdgeEndStyleRed = `${halfEdgeEndStyleGeneric}red;`
-            
-            let halfEdgeStartStyleGray = `${halfEdgeStartStyleGeneric}gray;`
-            let halfEdgeEndStyleGray = `${halfEdgeEndStyleGeneric}gray;`
-
-
-            document.getElementById("mapArea").style.width = (`${(currentRowArray.length) * fullControlSize}px`) //setting map width and height based on amount of controls
-            document.getElementById("mapArea").style.height = (`${(map.length) * fullControlSize}px`)
-            document.getElementById("mapArea").style.left = ("50%") // 50% of the whole body
-            document.getElementById("mapArea").style.translate = ("-50%") // 50% of the map
 
             let controlProperties = {
               active: currentRowArray[selectedBlock],
@@ -235,8 +237,33 @@ function loadMap(map){ //accept map as parameter when invoking
             }
         }
     }
+    return {
+        width:map[0].length,
+        height:map.length,
+        fullControlSize:fullControlSize
+    }
+}
+/*generate a character..
+Param 1 string 
+Param 2,3 (integer) will become pixels exactly
+Param 4,5 (integer * controlSize) will be how many whole blocks across and down
+*/
+function generateCharacter(teamColor, width, height, left, top) {
+    let characterBlob = document.createElement("div")
+    characterBlob.style = (`
+    background:${teamColor};
+    width:${width}px;
+    height:${height}px;
+    left:${left * mapProperties.fullControlSize}px;
+    top:${top * mapProperties.fullControlSize}px;
+    translate: -50% -50%
+    `)
+    characterBlob.className = "polygonDeformedOctagon"
+    document.getElementById("mapArea").append(characterBlob)
 }
 
+
+//check window size
 let windowIsBigEnough = true
 function checkMinimumWindowSize(){
     if(window.innerHeight < heightValue || window.innerWidth < widthValue) {
@@ -263,5 +290,6 @@ window.onresize = checkMinimumWindowSize
 checkMinimumWindowSize()
 // UNCOMMENT THESE ^
 
-loadMap(map4)
-generateCharacter("green", 30, 30,0,0)
+let mapProperties = loadMap(map4) //collecting return from loading of map
+console.log(mapProperties)
+generateCharacter("green", 30, 30, 0, 0)
