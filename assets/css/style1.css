@@ -15,6 +15,12 @@ body {
     color:red;
 }
 
+#windowSizeWarning{
+    font-family: cursive;
+    font-weight: bolder;
+    font-size: 1.3em;
+    color: gray;
+}
 
 #mapArea {
     position:fixed;
@@ -91,3 +97,4 @@ body {
         5% 20%
       )
 }
+

@@ -25,14 +25,14 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     if ((heightValue / map.length)< (widthValue /map[0].length)){  //height situation
         fullControlSize = ((heightValue * 0.96) - 40)/map.length
         //fullControlSizeByPercent = (((window.innerHeight * 0.96) - 40)/map.length)/window.innerHeight * 100 // does not yet work, not in use
-        console.log(`HEIGHT exceeds width`)
+        //console.log(`HEIGHT exceeds width`)
         //console.log(fullControlSizeByPercent)
     } else if ((heightValue / map.length)>= (widthValue /map[0].length)){ // width situation
         fullControlSize = ((widthValue  * 0.96))/map[0].length
-        console.log(`WIDTH exceeds or equals height`)
+        //console.log(`WIDTH exceeds or equals height`)
     }
-    console.log((widthValue *.96) /map[0].length) //width
-    console.log((heightValue *.96) / map.length) // height
+    //console.log((widthValue *.96) /map[0].length) //width of hypothetical block to fit in set width
+    //console.log((heightValue *.96) / map.length) // height of hypothetical block to fit in set height
 
     let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":fullControlSize/13} // edge sizing for each control TBD dynamic girth
 
