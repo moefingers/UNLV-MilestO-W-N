@@ -1,6 +1,23 @@
+body {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    
+}
+#header {
+    height:40px;
+    padding:0;
+    margin:0
+}
+
 #headerPart {
     color:red;
 }
+
+#mapArea {
+    position:fixed;
+}
+
 
 .controlBlock {
     clip-path: polygon(
@@ -56,5 +73,22 @@
         100% 50%,
         90% 100%,
         0% 100%
+      )
+}
+
+.character {
+    width:30px;
+    height: 30px;
+    background:black;
+    position: fixed;
+    clip-path: polygon(
+        50% 0%,
+        95% 20%,
+        100% 50%,
+        95% 80%,
+        50% 100%,
+        5% 80%,
+        0% 50%,
+        5% 20%
       )
 }
