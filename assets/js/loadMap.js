@@ -1,7 +1,9 @@
 import settings from '../data/settings.json' assert { type: 'json' };
 let heightValue = settings.windowSize.heightValue
 let widthValue = settings.windowSize.widthValue
-export function loadMap(map){ //accept map as parameter when invoking
+export function loadMap(fullMap){ //accept map as parameter when invoking
+    let map = fullMap.map
+
     document.getElementById("playableWindow").style = `
     width: ${widthValue}px;
     height: ${heightValue + 40}px;
@@ -10,7 +12,7 @@ export function loadMap(map){ //accept map as parameter when invoking
     left: 50%;
     translate: -50% 0;
     `
-    let controlOffset = 2            
+            
 
     let fullControlSize //initialize variable for later if statement
     let fullControlSizeByPercent
@@ -34,29 +36,34 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     //console.log((widthValue *.96) /map[0].length) //width of hypothetical block to fit in set width
     //console.log((heightValue *.96) / map.length) // height of hypothetical block to fit in set height
 
-    let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":fullControlSize/13} // edge sizing for each control TBD dynamic girth
+    let controlOffset = fullControlSize * .02   
+    console.log(fullControlSize)
+    let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":fullControlSize/12} // edge sizing for each control TBD dynamic girth
 
     // making some classes for types of players' areas
     const controlBlockStyleGeneric = `background:gray;opacity:0.3;`
     
-    let halfEdgeStartStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
-    let halfEdgeEndStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px;background:`
+    let halfEdgeStartStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px`
+    let halfEdgeEndStyleGeneric = `width:${fullEdgeSize.length/2}px;height:${fullEdgeSize.girth}px`
     
     
-    let halfEdgeStartStyleGreen = `${halfEdgeStartStyleGeneric}green;`
-    let halfEdgeEndStyleGreen = `${halfEdgeEndStyleGeneric}green;`
+    let halfEdgeStartStyleGreen = `${halfEdgeStartStyleGeneric};background:green;`
+    let halfEdgeEndStyleGreen = `${halfEdgeEndStyleGeneric};background:green;`
     
-    let halfEdgeStartStyleRed = `${halfEdgeStartStyleGeneric}red;`
-    let halfEdgeEndStyleRed = `${halfEdgeEndStyleGeneric}red;`
+    let halfEdgeStartStyleRed = `${halfEdgeStartStyleGeneric};background:red;`
+    let halfEdgeEndStyleRed = `${halfEdgeEndStyleGeneric};background:red;`
     
-    let halfEdgeStartStyleGray = `${halfEdgeStartStyleGeneric}gray;`
-    let halfEdgeEndStyleGray = `${halfEdgeEndStyleGeneric}gray;`
+    let halfEdgeStartStyleGray = `${halfEdgeStartStyleGeneric};background:gray;`
+    let halfEdgeEndStyleGray = `${halfEdgeEndStyleGeneric};background:gray;`
 
 
     document.getElementById("mapArea").style.width = (`${(map[0].length) * fullControlSize}px`) //setting map width and height based on amount of controls
     document.getElementById("mapArea").style.height = (`${(map.length) * fullControlSize}px`)
     document.getElementById("mapArea").style.left = ("50%") // 50% of the whole body
     document.getElementById("mapArea").style.translate = ("-50% 0") // 50% of the map
+
+    let coordinatesTopLeftActive
+    let coordinatesBottomRightActive
 
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRowArray = (map[selectedRow]) //select row from map (for readability)
@@ -162,14 +169,20 @@ if (you have a small heightValue for the window), and (a large map.length (how m
                     horizontalEdge(belowControlProperties.pseudoCoordinates, (locationY + fullControlSize))
                 }
                
+                
             } else if (controlProperties.active == false){
                 //console.log(`${controlProperties.pseudoCoordinates} not active`)
             }
         }
     }
+
+
+
+
+
     return {
-        width:map[0].length,
-        height:map.length,
-        fullControlSize:fullControlSize
+        mapSize:[map[0].length,map.length],
+        fullControlSize:fullControlSize,
+        spawns:fullMap.spawns
     }
 }

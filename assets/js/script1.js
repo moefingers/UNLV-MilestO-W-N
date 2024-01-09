@@ -14,17 +14,17 @@ let widthValue = settings.windowSize.widthValue
 
 /*generate a character..
 Param 1 string 
-Param 2,3 (integer) will become pixels exactly
-Param 4,5 (integer * controlSize) will be how many whole blocks across and down
+Param 2 (array) integers will become pixels exactly  [0] == width  && [1] == height
+Param 3 (array) integers will denote how many whole blocks across and down [0] == across  && [1] == down
 */
-async function generateCharacter(teamColor, width, height, left, top) {
+async function generateCharacter(teamColor, sizeArray, locArray) {
     let characterBlob = document.createElement("div")
     characterBlob.style = (`
     background:${teamColor};
-    width:${width}px;
-    height:${height}px;
-    left:${left * mapProperties.fullControlSize}px;
-    top:${top * mapProperties.fullControlSize}px;
+    width:${sizeArray[0]}px;
+    height:${sizeArray[1]}px;
+    left:${locArray[0] * mapProperties.fullControlSize}px;
+    top:${locArray[1] * mapProperties.fullControlSize}px;
     translate: -50% -50%
     `)
     characterBlob.className = "polygonDeformedOctagon"
@@ -38,6 +38,10 @@ window.onresize = checkMinimumWindowSize
 checkMinimumWindowSize()
 
 
-let mapProperties = loadMap(maps.map2) //collecting return from loading of map
+let mapProperties = loadMap(maps.map5) //collecting return from loading of map
 console.log(mapProperties)
-generateCharacter("green", 30, 30, 0, 0)
+generateCharacter("green", [30,30], mapProperties.spawns.player1)
+generateCharacter("red", [30,30], mapProperties.spawns.player2)
+generateCharacter("blue", [30,30], mapProperties.spawns.player3)
+generateCharacter("lightblue", [30,30], mapProperties.spawns.player4)
+
