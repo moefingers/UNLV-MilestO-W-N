@@ -37,7 +37,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     //console.log((heightValue *.96) / map.length) // height of hypothetical block to fit in set height
 
     let controlOffset = fullControlSize * .02   
-    console.log(fullControlSize)
+    //console.log(fullControlSize)
     let fullEdgeSize = {"length":fullControlSize-( controlOffset *2), "girth":fullControlSize/12} // edge sizing for each control TBD dynamic girth
 
     // making some classes for types of players' areas
@@ -61,9 +61,6 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     document.getElementById("mapArea").style.height = (`${(map.length) * fullControlSize}px`)
     document.getElementById("mapArea").style.left = ("50%") // 50% of the whole body
     document.getElementById("mapArea").style.translate = ("-50% 0") // 50% of the map
-
-    let coordinatesTopLeftActive
-    let coordinatesBottomRightActive
 
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRowArray = (map[selectedRow]) //select row from map (for readability)
