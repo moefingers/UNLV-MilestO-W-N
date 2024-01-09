@@ -19,6 +19,6 @@ let mapProperties = loadMap(maps.map5)
 //console.log(mapProperties)
 generateCharacter("green", [30,30], mapProperties.spawns.player1, ["w","a","s","d"], mapProperties.fullControlSize)
 generateCharacter("red", [30,30], mapProperties.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],mapProperties.fullControlSize)
-//generateCharacter("blue", [30,30], mapProperties.spawns.player3,  ["8","4","5","6"],mapProperties.fullControlSize)
-//generateCharacter("lightblue", [30,30], mapProperties.spawns.player4,  ["i","j","k","l"],mapProperties.fullControlSize)
+generateCharacter("blue", [30,30], mapProperties.spawns.player3,  ["8","4","5","6"],mapProperties.fullControlSize)
+generateCharacter("lightblue", [30,30], mapProperties.spawns.player4,  ["i","j","k","l"],mapProperties.fullControlSize)
 

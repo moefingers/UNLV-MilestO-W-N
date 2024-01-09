@@ -29,12 +29,49 @@ export function move(element) {
         element.style.top = y + 'px'
         
         function moveCharacter(){ 
+            function checkValidTravelPath(coorX, coorY, addX, addY){
+                let subtractedHalf = false
+                let query
+                //console.log(coorX)
+                if (addX != 0){
+                    console.log("working")
+                    if (coorX.toString().includes(".5")){
+                        subtractedHalf = "x"
+                        coorX+=addX
+                        query = `#controlHorizontalStart-x${coorX + 1 + (addX * 2)}-y${coorY + 1}`
+                    }
+                    if (coorY.toString().includes(".5")){
+                        return coorX
+                    } 
+                } else if (addY != 0){
+                    if (coorY.toString().includes(".5")){
+                        subtractedHalf = "y"
+                        coorY+=addY
+                        query = `#controlHorizontalStart-x${coorX + 1}-y${coorY + 1 + (addY * 2)}`
+                    }
+                    if (coorX.toString().includes(".5")){
+                        return coorY
+                    } 
+                }
+                
+                if(document.querySelector(query)){
+                    x+=fullControlSize*addX
+                    y+=fullControlSize*addY
+                    if(subtractedHalf == "x"){coorX+=addX; return coorX} else if(subtractedHalf == "y"){coorY+=addY; return coorY} else {console.log("poopy")}
+                }
+            
+            }
+
             if(direction === 'left'){
+                //coordinateX = checkValidTravelPath(coordinateX, coordinateY, -0.5, 0)
                 let subtractedHalf = false
                 if (coordinateX.toString().includes(".5")){
                     subtractedHalf = true
                     coordinateX+=0.5
                 }
+                if (coordinateY.toString().includes(".5")){
+                    return coordinateY
+                } 
 
                 if(document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY + 1}`)){
                     x-=fullControlSize/2
@@ -43,11 +80,15 @@ export function move(element) {
                 }
             }
             if(direction === 'up'){
+                //coordinateY = checkValidTravelPath(coordinateX,coordinateY, 0, -0.5)
                 let subtractedHalf = false
                 if (coordinateY.toString().includes(".5")){
                     subtractedHalf = true
                     coordinateY+=0.5
                 }
+                if (coordinateX.toString().includes(".5")){
+                    return coordinateX
+                } 
 
                 if(document.querySelector(`#controlVerticalStart-x${coordinateX + 1}-y${coordinateY}`)){
                     y-=fullControlSize/2
@@ -61,6 +102,9 @@ export function move(element) {
                     subtractedHalf = true
                     coordinateX-=0.5
                 }
+                if (coordinateY.toString().includes(".5")){
+                    return coordinateY
+                } 
 
                 if(document.querySelector(`#controlHorizontalStart-x${coordinateX + 1}-y${coordinateY + 1}`)){
                     x+=fullControlSize/2
@@ -74,6 +118,9 @@ export function move(element) {
                     subtractedHalf = true
                     coordinateY-=0.5
                 }
+                if (coordinateX.toString().includes(".5")){
+                    return coordinateX
+                } 
 
                 if(document.querySelector(`#controlVerticalStart-x${coordinateX + 1}-y${coordinateY + 1}`)){
                     y+=fullControlSize/2
