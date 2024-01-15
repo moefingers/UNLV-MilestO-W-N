@@ -66,6 +66,11 @@ export function move(element) {
             // }
             if(movementAllowed === true && direction !== "null"){
                 let capturedEdge
+                let firstControl
+                let firstControlEdges
+                let secondControl
+                let secondControlEdges
+
                 if(direction === 'left'){
                     //coordinateX = checkValidTravelPath(coordinateX, coordinateY, -0.5, 0)
                     let subtractedHalf = false
@@ -83,8 +88,42 @@ export function move(element) {
                     console.log(capturedEdge)
                     if(capturedEdge){
                         x-=fullControlSize/2
+                        
+                        firstControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY}`)
+                        firstControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY+1}`),
+                        ]
+                        
+                        secondControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY+1}`)
+                        
+                        secondControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY+2}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY+2}`),
+                        ]
                         coordinateX-=0.5
                         if(subtractedHalf == true){coordinateX-=0.5}
+                        
+                        console.log("controls") 
+                        console.log(firstControl)
+                        console.log(firstControlEdges)
+                        console.log(secondControl)
+                        console.log(secondControlEdges)
+
                     }
                 }
                 if(direction === 'up'){
@@ -104,8 +143,42 @@ export function move(element) {
                     console.log(capturedEdge)
                     if(capturedEdge){
                         y-=fullControlSize/2
+                        
+                        firstControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY}`)
+                        firstControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY+1}`),
+                        ]
+                        
+                        secondControl = document.querySelector(`#control-x${coordinateX+1}-y${coordinateY}`)
+                        
+                        secondControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+2}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+2}-y${coordinateY}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                        ]
                         coordinateY-=0.5
                         if(subtractedHalf == true){coordinateY-=0.5}
+                        
+                        console.log("controls") 
+                        console.log(firstControl)
+                        console.log(firstControlEdges)
+                        console.log(secondControl)
+                        console.log(secondControlEdges)
+
                     }
                 }
                 if(direction === 'right'){
@@ -123,10 +196,44 @@ export function move(element) {
                     console.log(capturedEdge)
                     if(capturedEdge){
                         x+=fullControlSize/2
+                        
+                        firstControl = document.querySelector(`#control-x${coordinateX+1}-y${coordinateY}`)
+                        firstControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+2}-y${coordinateY}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+2}-y${coordinateY}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                        ]
+                        
+                        secondControl = document.querySelector(`#control-x${coordinateX+1}-y${coordinateY+1}`)
+                        
+                        secondControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+2}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+2}-y${coordinateY+1}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY+2}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY+2}`),
+                        ]
                         coordinateX+=0.5
                         if(subtractedHalf == true){coordinateX+=0.5}
                         
-                console.log("ran")
+                        console.log("controls") 
+                        console.log(firstControl)
+                        console.log(firstControlEdges)
+                        console.log(secondControl)
+                        console.log(secondControlEdges)
+
+
+                        
                     }
                 }
                 if(direction === 'down'){
@@ -143,18 +250,70 @@ export function move(element) {
 
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY + 1}`)
                     console.log(capturedEdge)
+                    // this is if it does something \/
                     if(capturedEdge){
                         y+=fullControlSize/2
+                        
+                        firstControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY+1}`)
+                        firstControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY+2}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX}-y${coordinateY+2}`),
+                        ]
+                        
+                        secondControl = document.querySelector(`#control-x${coordinateX+1}-y${coordinateY+1}`)
+                        
+                        secondControlEdges = [
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalStart-x${coordinateX+2}-y${coordinateY+1}`),
+                            document.querySelector(`#controlVerticalEnd-x${coordinateX+2}-y${coordinateY+1}`),
+                            
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY+1}`),
+                            document.querySelector(`#controlHorizontalStart-x${coordinateX+1}-y${coordinateY+2}`),
+                            document.querySelector(`#controlHorizontalEnd-x${coordinateX+1}-y${coordinateY+2}`),
+                        ]
                         coordinateY+=0.5
                         if(subtractedHalf == true){coordinateY+=0.5}
+
+                        console.log("controls") 
+                        console.log(firstControl)
+                        console.log(firstControlEdges)
+                        console.log(secondControl)
+                        console.log(secondControlEdges)
+
+
                     }
                 }
                 element.style.left = x + 'px'
                 element.style.top = y + 'px'
+
                 if(capturedEdge){capturedEdge.style.background = teamColor}
+
+                function allEqual(array){
+                    return array.every(item => 
+                        item.style.background == array[0].style.background)
+                }
                 
+                if(firstControl){
+                    if(allEqual(firstControlEdges)){firstControl.style.background = teamColor}
+                    else if (!allEqual(firstControlEdges)){firstControl.style.background = "gray"}
+                }
+                if(secondControl){
+                    if(allEqual(secondControlEdges)){secondControl.style.background = teamColor}
+                    else if (!allEqual(secondControlEdges)){secondControl.style.background = "gray"}
+                }
+
+
                 movementAllowed = false
-                setTimeout(() => {movementAllowed = true; console.log(movementAllowed)}, movementInterval)
+                setTimeout(() => {movementAllowed = true}, movementInterval)
                 //console.log(coordinateX, coordinateY)
             }
         }
