@@ -7,7 +7,7 @@ export function move(element) {
         element.style.top = top + 'px'
     }
 
-    function moveWithKeys(locArray, keyArray, fullControlSize, callback){
+    function moveWithKeys(locArray, keyArray, fullControlSize, teamColor, callback){
         let direction
         let keysHeld = []
         let x = locArray[0] * fullControlSize
@@ -62,18 +62,23 @@ export function move(element) {
             
             }
 
+            let capturedEdge
             if(direction === 'left'){
                 //coordinateX = checkValidTravelPath(coordinateX, coordinateY, -0.5, 0)
                 let subtractedHalf = false
+                let controlTypeName = "HorizontalEnd"
                 if (coordinateX.toString().includes(".5")){
                     subtractedHalf = true
+                    controlTypeName = "HorizontalStart"
                     coordinateX+=0.5
                 }
                 if (coordinateY.toString().includes(".5")){
                     return coordinateY
                 } 
-
-                if(document.querySelector(`#controlHorizontalStart-x${coordinateX}-y${coordinateY + 1}`)){
+                // this is where movement happens \/
+                capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX}-y${coordinateY + 1}`)
+                console.log(capturedEdge)
+                if(capturedEdge){
                     x-=fullControlSize/2
                     coordinateX-=0.5
                     if(subtractedHalf == true){coordinateX-=0.5}
@@ -82,15 +87,19 @@ export function move(element) {
             if(direction === 'up'){
                 //coordinateY = checkValidTravelPath(coordinateX,coordinateY, 0, -0.5)
                 let subtractedHalf = false
+                let controlTypeName = "VerticalEnd"
                 if (coordinateY.toString().includes(".5")){
                     subtractedHalf = true
+                    controlTypeName = "VerticalStart"
                     coordinateY+=0.5
                 }
                 if (coordinateX.toString().includes(".5")){
                     return coordinateX
                 } 
 
-                if(document.querySelector(`#controlVerticalStart-x${coordinateX + 1}-y${coordinateY}`)){
+                capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY}`)
+                console.log(capturedEdge)
+                if(capturedEdge){
                     y-=fullControlSize/2
                     coordinateY-=0.5
                     if(subtractedHalf == true){coordinateY-=0.5}
@@ -98,15 +107,18 @@ export function move(element) {
             }
             if(direction === 'right'){
                 let subtractedHalf = false
+                let controlTypeName = "HorizontalStart"
                 if (coordinateX.toString().includes(".5")){
                     subtractedHalf = true
+                    controlTypeName = "HorizontalEnd"
                     coordinateX-=0.5
                 }
                 if (coordinateY.toString().includes(".5")){
                     return coordinateY
                 } 
-
-                if(document.querySelector(`#controlHorizontalStart-x${coordinateX + 1}-y${coordinateY + 1}`)){
+                capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY + 1}`)
+                console.log(capturedEdge)
+                if(capturedEdge){
                     x+=fullControlSize/2
                     coordinateX+=0.5
                     if(subtractedHalf == true){coordinateX+=0.5}
@@ -114,23 +126,28 @@ export function move(element) {
             }
             if(direction === 'down'){
                 let subtractedHalf = false
+                let controlTypeName = "VerticalStart"
                 if (coordinateY.toString().includes(".5")){
                     subtractedHalf = true
+                    controlTypeName = "VerticalEnd"
                     coordinateY-=0.5
                 }
                 if (coordinateX.toString().includes(".5")){
                     return coordinateX
                 } 
 
-                if(document.querySelector(`#controlVerticalStart-x${coordinateX + 1}-y${coordinateY + 1}`)){
+                capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY + 1}`)
+                console.log(capturedEdge)
+                if(capturedEdge){
                     y+=fullControlSize/2
                     coordinateY+=0.5
                     if(subtractedHalf == true){coordinateY+=0.5}
+                    capturedEdge.style
                 }
             }
             element.style.left = x + 'px'
             element.style.top = y + 'px'
-            
+            if(capturedEdge){capturedEdge.style.background = teamColor}
             //console.log(coordinateX, coordinateY)
         }
         

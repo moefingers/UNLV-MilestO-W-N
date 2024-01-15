@@ -19,6 +19,7 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
     top:${top}px;
     translate: -50% -50%
     `)
+    characterBlob.pseudoCoords = locArray
     characterBlob.className = "polygonDeformedOctagon"
 
     function changeImage(newImageParam){
@@ -43,5 +44,5 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
 
     document.getElementById("mapArea").append(characterBlob)
 
-    move(characterBlob).withKeys(locArray, keyArray, fullControlSize)
+    move(characterBlob).withKeys(locArray, keyArray, fullControlSize, teamColor)
 }
