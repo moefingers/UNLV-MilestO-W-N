@@ -2,9 +2,14 @@
 
 export function move(element) {
 
-    function moveToCoordinates(left, top) {
-        element.style.left = left + 'px'
-        element.style.top = top + 'px'
+    function moveToCoordinates(locArray) {
+
+        
+        let x = locArray[0] * fullControlSize
+        let y = locArray[1] * fullControlSize
+        element.pseudoCoordinates = [locArray[0],locArray[1]]
+        element.style.left = x + 'px'
+        element.style.top = y + 'px'
     }
 
     function moveWithKeys(locArray, keyArray, fullControlSize, teamColor, callback){
