@@ -20,26 +20,30 @@ generateCharacter(
     [30, 30],
     mapProperties.spawns.player1,
     ['w', 'a', 's', 'd'],
-    mapProperties.fullControlSize
+    mapProperties.fullControlSize,
+    mapProperties.map
 );
 generateCharacter(
     'red',
     [30, 30],
     mapProperties.spawns.player2,
     ['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
-    mapProperties.fullControlSize
+    mapProperties.fullControlSize,
+    mapProperties.map
 );
 generateCharacter(
     'blue',
     [30, 30],
     mapProperties.spawns.player3,
     ['8', '4', '5', '6'],
-    mapProperties.fullControlSize
+    mapProperties.fullControlSize,
+    mapProperties.map
 );
 generateCharacter(
     'lightblue',
     [30, 30],
     mapProperties.spawns.player4,
     ['i', 'j', 'k', 'l'],
-    mapProperties.fullControlSize
+    mapProperties.fullControlSize,
+    mapProperties.map
 );

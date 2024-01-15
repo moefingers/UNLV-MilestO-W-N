@@ -1,0 +1,21 @@
+{
+    "name": "unlv-milesto-w-n",
+    "version": "1.0.0",
+    "description": "web game",
+    "main": "assets/js/main.js",
+    "type": "module",
+    "scripts": {
+        "test": "node assets/js/test.js",
+        "debug": "node --inspect-brk  assets/js/test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/moefingers/UNLV-MilestO-W-N.git"
+    },
+    "author": "tbd",
+    "license": "tbd",
+    "bugs": {
+        "url": "https://github.com/moefingers/UNLV-MilestO-W-N/issues"
+    },
+    "homepage": "https://github.com/moefingers/UNLV-MilestO-W-N#readme"
+}

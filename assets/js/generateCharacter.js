@@ -1,13 +1,23 @@
 import { move } from './move.js';
 
+import { Location } from './location.js';
+
 /*generate a character..
 Param 1 string 
 Param 2 (array) integers will become pixels exactly  [0] == width  && [1] == height
 Param 3 (array) integers will denote how many whole blocks across and down [0] == across  && [1] == down
 */
-export async function generateCharacter(teamColor, sizeArray, locArray, keyArray, fullControlSize) {
-    let left = locArray[0] * fullControlSize;
-    let top = locArray[1] * fullControlSize;
+export async function generateCharacter(
+    teamColor,
+    sizeArray,
+    locationArray,
+    keyArray,
+    fullControlSize,
+    map
+) {
+    const location = new Location(locationArray[0], locationArray[1]);
+    let left = location.x * fullControlSize;
+    let top = location.y * fullControlSize;
 
     let characterBlob = document.createElement('div');
     characterBlob.style = `
@@ -43,5 +53,5 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
 
     document.getElementById('mapArea').append(characterBlob);
 
-    move(characterBlob).withKeys(locArray, keyArray, fullControlSize);
+    move(characterBlob, map).withKeys(location, keyArray, fullControlSize);
 }

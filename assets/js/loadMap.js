@@ -1,6 +1,7 @@
 import settings from '../data/settings.json' assert { type: 'json' };
 let heightValue = settings.windowSize.heightValue;
 let widthValue = settings.windowSize.widthValue;
+
 export function loadMap(fullMap) {
     //accept map as parameter when invoking
     let map = fullMap.map;
@@ -193,6 +194,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     }
 
     return {
+        map: map,
         mapSize: [map[0].length, map.length],
         fullControlSize: fullControlSize,
         spawns: fullMap.spawns,
