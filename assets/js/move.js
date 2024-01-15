@@ -2,6 +2,7 @@
 
 export function move(element) {
 
+        let direction
     function moveToCoordinates(locArray) {
 
         
@@ -16,8 +17,8 @@ export function move(element) {
         let movementInterval = 300
         let movementAllowed = true
         let movementDelay
-        let direction
         let keysHeld = []
+        let allKeysReleased = true
         let x = locArray[0] * fullControlSize
         let y = locArray[1] * fullControlSize
         let coordinateX = locArray[0]
@@ -69,13 +70,20 @@ export function move(element) {
             //     }
             
             // }
-            if(movementAllowed === true && direction !== "null"){
+            console.log(direction)
+            if(direction == "null"){
+                console.log("returned successfully")
+                    return direction
+                }
+            if(movementAllowed === true && direction != "null" && !allKeysReleased){
+                console.log("running with direction as " + direction)
                 let capturedEdge
                 let firstControl
                 let firstControlEdges
                 let secondControl
                 let secondControlEdges
 
+                
                 if(direction === 'left'){
                     //coordinateX = checkValidTravelPath(coordinateX, coordinateY, -0.5, 0)
                     let subtractedHalf = false
@@ -90,7 +98,7 @@ export function move(element) {
                     } 
                     // this is where movement happens \/
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX}-y${coordinateY + 1}`)
-                    console.log(capturedEdge)
+                    // console.log(capturedEdge)
                     if(capturedEdge){
                         x-=fullControlSize/2
                         
@@ -123,11 +131,11 @@ export function move(element) {
                         coordinateX-=0.5
                         if(subtractedHalf == true){coordinateX-=0.5}
                         
-                        console.log("controls") 
-                        console.log(firstControl)
-                        console.log(firstControlEdges)
-                        console.log(secondControl)
-                        console.log(secondControlEdges)
+                        // console.log("controls") 
+                        // console.log(firstControl)
+                        // console.log(firstControlEdges)
+                        // console.log(secondControl)
+                        // console.log(secondControlEdges)
 
                     }
                 }
@@ -145,7 +153,7 @@ export function move(element) {
                     } 
 
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY}`)
-                    console.log(capturedEdge)
+                    // console.log(capturedEdge)
                     if(capturedEdge){
                         y-=fullControlSize/2
                         
@@ -178,11 +186,11 @@ export function move(element) {
                         coordinateY-=0.5
                         if(subtractedHalf == true){coordinateY-=0.5}
                         
-                        console.log("controls") 
-                        console.log(firstControl)
-                        console.log(firstControlEdges)
-                        console.log(secondControl)
-                        console.log(secondControlEdges)
+                        // console.log("controls") 
+                        // console.log(firstControl)
+                        // console.log(firstControlEdges)
+                        // console.log(secondControl)
+                        // console.log(secondControlEdges)
 
                     }
                 }
@@ -198,7 +206,7 @@ export function move(element) {
                         return coordinateY
                     } 
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY + 1}`)
-                    console.log(capturedEdge)
+                    // console.log(capturedEdge)
                     if(capturedEdge){
                         x+=fullControlSize/2
                         
@@ -231,11 +239,11 @@ export function move(element) {
                         coordinateX+=0.5
                         if(subtractedHalf == true){coordinateX+=0.5}
                         
-                        console.log("controls") 
-                        console.log(firstControl)
-                        console.log(firstControlEdges)
-                        console.log(secondControl)
-                        console.log(secondControlEdges)
+                        // console.log("controls") 
+                        // console.log(firstControl)
+                        // console.log(firstControlEdges)
+                        // console.log(secondControl)
+                        // console.log(secondControlEdges)
 
 
                         
@@ -254,7 +262,7 @@ export function move(element) {
                     } 
 
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY + 1}`)
-                    console.log(capturedEdge)
+                    // console.log(capturedEdge)
                     // this is if it does something \/
                     if(capturedEdge){
                         y+=fullControlSize/2
@@ -288,11 +296,11 @@ export function move(element) {
                         coordinateY+=0.5
                         if(subtractedHalf == true){coordinateY+=0.5}
 
-                        console.log("controls") 
-                        console.log(firstControl)
-                        console.log(firstControlEdges)
-                        console.log(secondControl)
-                        console.log(secondControlEdges)
+                        // console.log("controls") 
+                        // console.log(firstControl)
+                        // console.log(firstControlEdges)
+                        // console.log(secondControl)
+                        // console.log(secondControlEdges)
 
 
                     }
@@ -328,22 +336,44 @@ export function move(element) {
         document.addEventListener('keydown', function(e){
             //if(e.repeat) return;
             //if(movementAllowed === true){
+                let keyToPush
+                function formatKeyToPush(key){
+                    
+                    if (key.length > 1){
+                        keyToPush = key
+                    } else if (key.length == 1) {
+                        keyToPush = key.toLowerCase()
+                    } else (
+                        console.log("poopy")
+                    )
+                    console.log(keyToPush)
+                }
+
                 if(e.key === leftKey || e.key === leftKey.toUpperCase()){
                     direction = 'left'
-                    if(!keysHeld.includes(leftKey)) {keysHeld.push(leftKey)}
+                    allKeysReleased = false
+                    formatKeyToPush(leftKey)
+                    if(!keysHeld.includes(leftKey) && !keysHeld.includes(leftKey.toUpperCase) && !keysHeld.includes(leftKey.toLowerCase)) {keysHeld.push(keyToPush)}
                 }
                 if(e.key === upKey || e.key === upKey.toUpperCase()){
                     direction = 'up'
-                    if(!keysHeld.includes(upKey)) {keysHeld.push(upKey)}
+                    allKeysReleased = false
+                    formatKeyToPush(upKey)
+                    if(!keysHeld.includes(upKey) && !keysHeld.includes(upKey.toUpperCase) && !keysHeld.includes(upKey.toLowerCase)) {keysHeld.push(keyToPush)}
                 }
                 if(e.key === rightKey || e.key === rightKey.toUpperCase()){
                     direction = 'right'
-                    if(!keysHeld.includes(rightKey)) {keysHeld.push(rightKey)}
+                    allKeysReleased = false
+                    formatKeyToPush(rightKey)
+                    if(!keysHeld.includes(rightKey) && !keysHeld.includes(rightKey.toUpperCase) && !keysHeld.includes(rightKey.toLowerCase)) {keysHeld.push(keyToPush)}
                 }
                 if(e.key === downKey || e.key === downKey.toUpperCase()){
                     direction = 'down'
-                    if(!keysHeld.includes(downKey)) {keysHeld.push(downKey)}
+                    allKeysReleased = false
+                    formatKeyToPush(downKey)
+                    if(!keysHeld.includes(downKey) && !keysHeld.includes(downKey.toUpperCase) && !keysHeld.includes(downKey.toLowerCase)) {keysHeld.push(keyToPush)}
                 }
+                console.log(direction)
             //}
             //movementAllowed = false
             //console.log("keys held below")
@@ -353,7 +383,7 @@ export function move(element) {
         
         document.addEventListener('keyup', function(e){
             
-            if(keysHeld.includes(e.key || e.key.toLowerCase())){
+            if(keysHeld.includes(e.key) || keysHeld.includes(e.key.toLowerCase) || keysHeld.includes(e.key.toUpperCase)){
                 // let newKeys = keysHeld.filter((keys) => keys != e.key)
                 // keysHeld = newKeys
                 
@@ -373,15 +403,20 @@ export function move(element) {
                 console.log(keysHeld)
             }
             console.log(e.key + " is the key released")
-            console.log("keys still held below in keyup")
-            console.log(keysHeld)
+            
 
             if (keysHeld.length == 0) {
                 console.log("stopping")
                 direction = "null"
+                allKeysReleased = true
+                console.log("direction is " + direction)
             }
             
-        })
+            console.log("keys still held below in keyup")
+            console.log(keysHeld)
+        }
+        
+        )
     }
 
     return {
