@@ -15,6 +15,9 @@ export function move(element) {
 
     function moveWithKeys(locArray, keyArray, fullControlSize, teamColor, callback){
         let movementInterval = 300
+        console.log(fullControlSize)
+        let microHalfFullControlSize = fullControlSize /2 /300 * 10
+        console.log(microHalfFullControlSize)
         let movementAllowed = true
         let movementDelay
         let keysHeld = []

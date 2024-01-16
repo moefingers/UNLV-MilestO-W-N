@@ -14,7 +14,7 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
     background:${teamColor};
     width:${sizeArray[0]}px;
     height:${sizeArray[1]}px;
-    position:"relative";
+    position: absolute;
     left:${left}px;
     top:${top}px;
     translate: -50% -50%
@@ -31,10 +31,12 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
             item.className = "item"
             item.style = (`
             background:black;
-            width:15px;
-            height:15px;
-            position:"relative";
-            translate: 50% 50%
+            width:50%;
+            height:50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%
             `)
 
             characterBlob.append(item)
