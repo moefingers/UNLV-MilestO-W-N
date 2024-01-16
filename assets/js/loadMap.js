@@ -25,7 +25,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 
 //TBD dynamic window resizing during gameplay
     if ((heightValue / map.length)< (widthValue /map[0].length)){  //height situation
-        fullControlSize = ((heightValue * 0.96) - 40)/map.length
+        fullControlSize = ((heightValue * 0.96))/map.length
         //fullControlSizeByPercent = (((window.innerHeight * 0.96) - 40)/map.length)/window.innerHeight * 100 // does not yet work, not in use
         //console.log(`HEIGHT exceeds width`)
         //console.log(fullControlSizeByPercent)
@@ -59,8 +59,10 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 
     document.getElementById("mapArea").style.width = (`${(map[0].length) * fullControlSize}px`) //setting map width and height based on amount of controls
     document.getElementById("mapArea").style.height = (`${(map.length) * fullControlSize}px`)
+    document.getElementById("mapArea").style.position = "absolute"
     document.getElementById("mapArea").style.left = ("50%") // 50% of the whole body
-    document.getElementById("mapArea").style.translate = ("-50% 0") // 50% of the map
+    document.getElementById("mapArea").style.top = ("50%")
+    document.getElementById("mapArea").style.translate = ("-50% -50%") // 50% of the map
 
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRowArray = (map[selectedRow]) //select row from map (for readability)

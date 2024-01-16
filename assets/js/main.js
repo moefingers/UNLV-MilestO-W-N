@@ -15,7 +15,7 @@ window.onresize = checkMinimumWindowSize
 checkMinimumWindowSize()
 
 //Loading the map from json in below line and collecting return
-let mapProperties = loadMap(maps.map5)
+let mapProperties = loadMap(maps.map4x3)
 //console.log(mapProperties)
 generateCharacter("green", [30,30], mapProperties.spawns.player1, ["w","a","s","d"], mapProperties.fullControlSize)
 generateCharacter("red", [30,30], mapProperties.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],mapProperties.fullControlSize)

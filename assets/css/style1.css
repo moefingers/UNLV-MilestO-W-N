@@ -11,6 +11,13 @@ body {
     margin:auto;
 }
 
+
+
+#playableWindow {
+    position: absolute;
+    top:5%;
+}
+
 #headerPart {
     color:red;
 }
@@ -22,9 +29,7 @@ body {
     color: gray;
 }
 
-#mapArea {
-    position:fixed;
-}
+
 
 
 .controlBlock {
