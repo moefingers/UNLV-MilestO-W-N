@@ -4,14 +4,7 @@ let widthValue = settings.windowSize.widthValue
 export function loadMap(fullMap){ //accept map as parameter when invoking
     let map = fullMap.map
 
-    document.getElementById("playableWindow").style = `
-    width: ${widthValue}px;
-    height: ${heightValue + 40}px;
-    position: absolute;
-    outline: 1px black solid;
-    left: 50%;
-    translate: -50% 0;
-    `
+
             
 
     let fullControlSize //initialize variable for later if statement
@@ -56,13 +49,15 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     let halfEdgeStartStyleGray = `${halfEdgeStartStyleGeneric};background:gray;`
     let halfEdgeEndStyleGray = `${halfEdgeEndStyleGeneric};background:gray;`
 
-
-    document.getElementById("mapArea").style.width = (`${(map[0].length) * fullControlSize}px`) //setting map width and height based on amount of controls
-    document.getElementById("mapArea").style.height = (`${(map.length) * fullControlSize}px`)
-    document.getElementById("mapArea").style.position = "absolute"
-    document.getElementById("mapArea").style.left = ("50%") // 50% of the whole body
-    document.getElementById("mapArea").style.top = ("50%")
-    document.getElementById("mapArea").style.translate = ("-50% -50%") // 50% of the map
+    let mapArea = document.createElement("div")
+    mapArea.id = "mapArea"
+    mapArea.style.width = (`${(map[0].length) * fullControlSize}px`) //setting map width and height based on amount of controls
+    mapArea.style.height = (`${(map.length) * fullControlSize}px`)
+    mapArea.style.position = "absolute"
+    mapArea.style.left = ("50%")
+    mapArea.style.top = ("50%")
+    mapArea.style.translate = ("-50% -50%")
+    document.getElementById("gameContainer").append(mapArea)
 
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRowArray = (map[selectedRow]) //select row from map (for readability)
@@ -106,7 +101,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
                 control.style.position ="absolute"
                 control.style.transformOrigin = "0px 0px"
                 control.style.translate = `${locationX}px ${locationY}px`
-                document.getElementById("mapArea").append(control)
+                mapArea.append(control)
 
                 // MAKE HORIZONTAL EDGES (with dynamically named IDs )
                 function horizontalEdge(controlCoordinates, locY){
@@ -131,7 +126,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
                     controlHorizontal.append(controlHorizontalStart)
                     controlHorizontal.append(controlHorizontalEnd)
 
-                    document.getElementById("mapArea").append(controlHorizontal)
+                    mapArea.append(controlHorizontal)
                 }
                 // MAKE VERTICAL EDGES (with dynamically named IDs )
                 function verticalEdge(controlCoordinates, locX){
@@ -157,7 +152,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
                     controlVertical.append(controlVerticalStart)
                     controlVertical.append(controlVerticalEnd)
 
-                    document.getElementById("mapArea").append(controlVertical)
+                    mapArea.append(controlVertical)
                 }
                 verticalEdge(controlProperties.pseudoCoordinates, locationX)
                 if(rightControlProperties.active == false){
