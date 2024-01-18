@@ -1,8 +1,9 @@
-  /*
+  
 *{
-   outline: black solid 1px;
+   /* outline: black solid 1px; */
+   user-select: none;
 } 
-*/
+
 
 body {
     text-align: center;
@@ -12,20 +13,26 @@ body {
 
 #splashArea {
     position: absolute;
-    left: 50%;
-    top: 40%;
-    translate: -50% -50%;
-    outline: black solid 1px;
-    width: fit-content;
-    height: fit-content;
 }
 
-#header {
+.centerFitContent {
     padding:0;
     margin:auto;
-    animation-name: swipeInOut;
-    animation-duration: 2s;
-    opacity: 0
+    width: fit-content;
+    position:absolute;
+
+    translate: -50% -50%;
+    left: 50%;
+    top: 40%;
+    /* outline: black solid 1px; */
+}
+
+.button:hover {
+    color: darkred
+}
+.button:active {
+    color: red;
+    font-weight: bold;
 }
 
 #headerPart {
@@ -113,7 +120,7 @@ body {
       )
 }
 
-@keyframes swipeInOut {
+@keyframes fadeInOut {
 
     0% {left: -10%; opacity: 0}
     90% {left: 50%; opacity: 1}
@@ -121,3 +128,30 @@ body {
 
 }
 
+@keyframes swipeIn {
+
+    0% {left: -10%}
+    100% {left: 50%}
+
+}
+
+@keyframes fadeIn {
+
+    0% {opacity: 0}
+    100% {opacity: 1}
+
+}
+
+@keyframes fadeOut {
+
+    0% {opacity: 1}
+    100% {opacity: 0}
+
+}
+
+@keyframes floatUp {
+
+    0% {top: 40%}
+    100% {top: 30%}
+
+}
