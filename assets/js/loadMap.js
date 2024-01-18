@@ -176,11 +176,11 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 
 
 
-
-    generateCharacter("green", [30,30], fullMap.spawns.player1, ["w","a","s","d"], fullControlSize)
-    generateCharacter("red", [30,30], fullMap.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],fullControlSize)
-    generateCharacter("blue", [30,30], fullMap.spawns.player3,  ["8","4","5","6"],fullControlSize)
-    generateCharacter("lightblue", [30,30], fullMap.spawns.player4,  ["i","j","k","l"],fullControlSize)
+    let characterSize = [100,100]
+    generateCharacter("green", characterSize, fullMap.spawns.player1, ["w","a","s","d"], fullControlSize)
+    generateCharacter("red", characterSize, fullMap.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],fullControlSize)
+    generateCharacter("blue", characterSize, fullMap.spawns.player3,  ["8","4","5","6"],fullControlSize)
+    generateCharacter("lightblue", characterSize, fullMap.spawns.player4,  ["i","j","k","l"],fullControlSize)
 
     return {
         mapSize:[map[0].length,map.length],
