@@ -46,7 +46,7 @@ export function loadSplash(gameContainer) {
         playGameButton.style.top = "40%"
 
 
-        playGameButton.addEventListener("click", ()=>{loadMap(maps.map1x1)}, false)
+        playGameButton.addEventListener("click", ()=>{loadMap(maps.map5)}, false)
         container.append(playGameButton)
 
         return playGameButton
