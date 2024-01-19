@@ -9,13 +9,21 @@ let swipeIn = [
 
 ]
 
+let fadeIn = [
+
+    {opacity: 0},
+    {opacity: 1}
+
+]
+
 export async function loadMapSelector(gameContainer){
     let selectorIndex = 0
     let mapArray =  []
     for (let map in maps){
-        mapArray.push(map)
+        mapArray.push(maps[map])
     }
     console.log(mapArray)
+    console.log(mapArray[0])
 
     let selectorContainer = document.createElement("div")
     selectorContainer.style = `
@@ -23,9 +31,16 @@ export async function loadMapSelector(gameContainer){
         position: absolute;
         width: 100%;
         height: 80%;
+        opacity: 0
     `
     gameContainer.append(selectorContainer)
-    let mapProperties = loadMap(maps.map0, selectorContainer)
+
+
+
+    let mapProperties = loadMap(mapArray[1], selectorContainer)
+    selectorContainer.style.opacity = 1
+    selectorContainer.animate(fadeIn, 200)
+    mapProperties.mapAreaElement.animate(swipeIn, 500)
 
     let characterSize = [50,50]
     generateCharacter("green", characterSize, mapProperties.spawns.player1, false, mapProperties.fullControlSize)

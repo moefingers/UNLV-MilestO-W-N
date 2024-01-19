@@ -44,7 +44,7 @@ let floatUp = [
 
 
 export function loadSplash(gameContainer) {
-
+    let clicked = false
     let timeoutArray = []
     let splashElementArray = []
 
@@ -100,16 +100,17 @@ export function loadSplash(gameContainer) {
 
 
         playGameButton.addEventListener("click", ()=>{
-            splashElementArray.forEach(element => {
-                element.animate(fadeOut, 1000)
+            if(!clicked){ clicked = true;
+                splashElementArray.forEach(element => {
+                    element.animate(fadeOut, 200)
+                    setTimeout(() => {
+                        element.remove()
+                    }, 200);
+                })
                 setTimeout(() => {
-                    element.remove()
-                }, 1000);
-            })
-            setTimeout(() => {
-                loadMapSelector(container)
-            }, 1000);
-
+                    loadMapSelector(container)
+                }, 200);
+            }
         }, false)
         container.append(playGameButton)
         splashElementArray.push(playGameButton)
@@ -125,7 +126,7 @@ export function loadSplash(gameContainer) {
         instructionsButton.style.top = "36%"
 
 
-        instructionsButton.addEventListener("click", ()=>{loadInstructions(container)}, false)
+        instructionsButton.addEventListener("click", ()=>{if(!clicked){cliekd = true; loadInstructions(container)}}, false)
         container.append(instructionsButton)
         splashElementArray.push(instructionsButton)
 
