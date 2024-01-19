@@ -1,11 +1,12 @@
 import settings from '../data/settings.json' assert { type: 'json' };
 
+import {checkWidthOrHeightSituation} from "./checkWidthOrHeightSituation.js"
 import { generateCharacter } from "./generateCharacter.js";
 let heightValue = settings.windowSize.heightValue
 let widthValue = settings.windowSize.widthValue
-export function loadMap(fullMap){ //accept map as parameter when invoking
+export function loadMap(fullMap, container){ //accept map as parameter when invoking
 
-    document.getElementById("gameContainer").innerHTML = ""
+    container.innerHTML = ""
     let map = fullMap.map
 
 
@@ -21,17 +22,10 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 */
 
 //TBD dynamic window resizing during gameplay
-    if ((heightValue / map.length)< (widthValue /map[0].length)){  //height situation
-        fullControlSize = ((heightValue * 0.96))/map.length
-        //fullControlSizeByPercent = (((window.innerHeight * 0.96) - 40)/map.length)/window.innerHeight * 100 // does not yet work, not in use
-        //console.log(`HEIGHT exceeds width`)
-        //console.log(fullControlSizeByPercent)
-    } else if ((heightValue / map.length)>= (widthValue /map[0].length)){ // width situation
-        fullControlSize = ((widthValue  * 0.96))/map[0].length
-        //console.log(`WIDTH exceeds or equals height`)
-    }
-    //console.log((widthValue *.96) /map[0].length) //width of hypothetical block to fit in set width
-    //console.log((heightValue *.96) / map.length) // height of hypothetical block to fit in set height
+    let containerWidthInPx = parseInt(container.parentElement.style.width) * parseInt(container.style.width) /100
+    let containerHeightInPx = parseInt(container.parentElement.style.height) * parseInt(container.style.height) /100
+
+    fullControlSize = checkWidthOrHeightSituation(containerWidthInPx, containerHeightInPx, map[0].length, map.length, 0.9)
 
     let controlOffset = fullControlSize * .02   
     //console.log(fullControlSize)
@@ -61,7 +55,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
     mapArea.style.left = ("50%")
     mapArea.style.top = ("50%")
     mapArea.style.translate = ("-50% -50%")
-    document.getElementById("gameContainer").append(mapArea)
+    container.append(mapArea)
 
     for(let selectedRow = 0; selectedRow < map.length; selectedRow++){ //initialize row number as 0, select rows while less than map.length, etc.
         let currentRowArray = (map[selectedRow]) //select row from map (for readability)
@@ -176,15 +170,16 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 
 
 
-    let characterSize = [50,50]
-    generateCharacter("green", characterSize, fullMap.spawns.player1, ["w","a","s","d"], fullControlSize)
-    generateCharacter("red", characterSize, fullMap.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],fullControlSize)
-    generateCharacter("blue", characterSize, fullMap.spawns.player3,  ["8","4","5","6"],fullControlSize)
-    generateCharacter("lightblue", characterSize, fullMap.spawns.player4,  ["i","j","k","l"],fullControlSize)
+    // let characterSize = [50,50]
+    // generateCharacter("green", characterSize, fullMap.spawns.player1, ["w","a","s","d"], fullControlSize)
+    // generateCharacter("red", characterSize, fullMap.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],fullControlSize)
+    // generateCharacter("blue", characterSize, fullMap.spawns.player3,  ["8","4","5","6"],fullControlSize)
+    // generateCharacter("lightblue", characterSize, fullMap.spawns.player4,  ["i","j","k","l"],fullControlSize)
 
     return {
         mapSize:[map[0].length,map.length],
         fullControlSize:fullControlSize,
-        spawns:fullMap.spawns
+        spawns:fullMap.spawns,
+        mapAreaElement: mapArea
     }
 }

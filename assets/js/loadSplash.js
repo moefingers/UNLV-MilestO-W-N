@@ -1,6 +1,5 @@
 import { checkMinimumWindowSize } from "./checkWindowSize.js";
-import { loadMap } from "./loadMap.js";
-import maps from '../data/maps.json' assert { type: 'json' };
+import { loadMapSelector } from "./loadMapSelector.js";
 
 window.onresize = checkMinimumWindowSize
 checkMinimumWindowSize()
@@ -46,8 +45,8 @@ let floatUp = [
 
 export function loadSplash(gameContainer) {
 
-    let skip = 1
     let timeoutArray = []
+    let splashElementArray = []
 
 
     function loadSkipButton(container){
@@ -59,7 +58,6 @@ export function loadSplash(gameContainer) {
         skipButton.style.color = "lightgray"
         skipButton.addEventListener("click",()=>{
             timeoutArray.forEach(timeout => {clearTimeout(timeout)})
-            skip = 0
             container.innerHTML = ""
             let title = loadTitle(gameContainer)
             title.style.top = "30%"
@@ -89,6 +87,7 @@ export function loadSplash(gameContainer) {
         title.innerHTML = `Milest<span id="headerPart">OWN</span>`
 
         container.append(title)
+        splashElementArray.push(title)
         return title
     }
 
@@ -100,8 +99,20 @@ export function loadSplash(gameContainer) {
         playGameButton.style.top = "40%"
 
 
-        playGameButton.addEventListener("click", ()=>{loadMap(maps.map1)}, false)
+        playGameButton.addEventListener("click", ()=>{
+            splashElementArray.forEach(element => {
+                element.animate(fadeOut, 1000)
+                setTimeout(() => {
+                    element.remove()
+                }, 1000);
+            })
+            setTimeout(() => {
+                loadMapSelector(container)
+            }, 1000);
+
+        }, false)
         container.append(playGameButton)
+        splashElementArray.push(playGameButton)
 
         return playGameButton
     }
@@ -116,6 +127,7 @@ export function loadSplash(gameContainer) {
 
         instructionsButton.addEventListener("click", ()=>{loadInstructions(container)}, false)
         container.append(instructionsButton)
+        splashElementArray.push(instructionsButton)
 
         return instructionsButton
     }
@@ -126,6 +138,7 @@ export function loadSplash(gameContainer) {
     }
     
     let skipButton = loadSkipButton(gameContainer)
+    skipButton.animate(fadeIn, 400)
 
     let preCred = loadPreCred(gameContainer)
     preCred.animate(fadeInOut, 3000)
@@ -147,8 +160,12 @@ export function loadSplash(gameContainer) {
                 loadPlayGameButton(gameContainer).animate(fadeIn, 1000)
             }, 200 );
             let removeSkipTimeOut = setTimeout(() => {
-                skipButton.remove()
-            }, 1500);
+                skipButton.style.opacity = 0
+                skipButton.animate(fadeOut, 1000)
+                setTimeout(() => {
+                    skipButton.remove()
+                }, 1000);
+            }, 200);
             timeoutArray.push(instructionsButtonTimeOut, playButtonTimeout, removeSkipTimeOut)
         }, 2300 );
         timeoutArray.push(titleRise)

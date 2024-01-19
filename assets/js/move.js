@@ -328,7 +328,7 @@ export function move(element) {
                     moveAnimation = [
                         { left: originalX + "px", opacity: 1, easing: "ease-out" },
                         {opacity: 0.5},
-                        { left: x + "px", opacity: 0.1, easing: "ease-in" }
+                        { left: x + "px", opacity: 1, easing: "ease-in" }
                     ]
                 } else if (captureY){
                     moveAnimation = [
@@ -338,13 +338,14 @@ export function move(element) {
                     ] 
                 }
 
-                let captureAnimation =[
-                    {background: capturedEdge.style.background, opacity: 1, easing: "ease-out" },
-                    {opacity: 0.8},
-                    {background: teamColor, opacity: 1, easing: "ease-in" }
-                ] 
+
 
                 if(capturedEdge){
+                    let captureAnimation =[
+                        {background: capturedEdge.style.background, opacity: 1},
+                        {opacity: 0.8,},
+                        {background: teamColor, opacity: 1, easing: "ease-in" }
+                    ] 
                     element.animate( moveAnimation,movementInterval)
                     capturedEdge.animate(captureAnimation, movementInterval)
                     //setTimeout(() => {
@@ -367,7 +368,7 @@ export function move(element) {
                             }
                             else if (!allEqual(controlEdges)){
                                 if (control.style.background !="gray")
-                                control.animate([{background:control.style.background},{background:"black"},{background:"gray"}], movementInterval)
+                                control.animate([{background:control.style.background},{opacity: 0},{background:"gray"}], movementInterval)
                                 control.style.background = "gray"
                             }
                         //}, movementInterval);

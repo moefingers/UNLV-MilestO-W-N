@@ -46,5 +46,6 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
 
     document.getElementById("mapArea").append(characterBlob)
 
-    move(characterBlob).withKeys(locArray, keyArray, fullControlSize, teamColor)
+    if (keyArray) {move(characterBlob).withKeys(locArray, keyArray, fullControlSize, teamColor)}
+    
 }
