@@ -340,16 +340,16 @@ export function move(element) {
 
                 let captureAnimation =[
                     {background: capturedEdge.style.background, opacity: 1, easing: "ease-out" },
-                    {opacity: 0.5},
+                    {opacity: 0.8},
                     {background: teamColor, opacity: 1, easing: "ease-in" }
                 ] 
 
                 if(capturedEdge){
                     element.animate( moveAnimation,movementInterval)
                     capturedEdge.animate(captureAnimation, movementInterval)
-                    setTimeout(() => {
+                    //setTimeout(() => {
                         capturedEdge.style.background = teamColor
-                    }, movementInterval);
+                    //}, movementInterval);
                 }
 
                 function allEqual(array){
@@ -360,15 +360,20 @@ export function move(element) {
 
                 function controlEdgesCheck(control, controlEdges){
                     if(control){
-                    setTimeout(() => {
-                        if(allEqual(controlEdges)){control.style.background = teamColor}
-                        else if (!allEqual(controlEdges)){control.style.background = "gray"}
-                    }, movementInterval);
+                        //setTimeout(() => {
+                            if(allEqual(controlEdges)){
+                                control.animate([{background:control.style.background},{background:teamColor}], movementInterval)
+                                control.style.background = teamColor
+                            }
+                            else if (!allEqual(controlEdges)){
+                                if (control.style.background !="gray")
+                                control.animate([{background:control.style.background},{background:"black"},{background:"gray"}], movementInterval)
+                                control.style.background = "gray"
+                            }
+                        //}, movementInterval);
                     }
                 }
-                if(firstControl){
 
-                }
                 controlEdgesCheck(firstControl, firstControlEdges)
                 controlEdgesCheck(secondControl, secondControlEdges)
 

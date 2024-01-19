@@ -5,18 +5,77 @@ import maps from '../data/maps.json' assert { type: 'json' };
 window.onresize = checkMinimumWindowSize
 checkMinimumWindowSize()
 
+let fadeInOut = [
+
+    {offset: 0, left: "-10%", opacity: 0, easing: "ease-out"},
+    {offset: 0.8, left: "50%", opacity: 1},
+    {offset: 0.9, left: "50%", opacity: 1},
+    {offset: 1, left: "60%", opacity: 0}
+]
+
+let swipeIn = [
+
+    {left: "-10%", easing: "ease-out"},
+    {left: "50%", easing: "ease-in"}
+
+]
+
+let fadeIn = [
+
+    {opacity: 0},
+    {opacity: 1}
+
+]
+
+let fadeOut = [
+
+    {opacity: 1},
+    {opacity: 0}
+
+]
+
+let floatUp = [
+
+    {top: "40%", easing: "ease-out"},
+    {top: "30%", easing: "ease-in"}
+
+]
+
+
+
+
 export function loadSplash(gameContainer) {
 
-    async function loadPreCred(container){
+    let skip = 1
+    let timeoutArray = []
+
+
+    function loadSkipButton(container){
+        let skipButton = document.createElement('div')
+        skipButton.id = "skipButton"
+        skipButton.classList = "centerFitContent"
+        skipButton.textContent = "skip"
+        skipButton.style.top = "80%"
+        skipButton.style.color = "lightgray"
+        skipButton.addEventListener("click",()=>{
+            timeoutArray.forEach(timeout => {clearTimeout(timeout)})
+            skip = 0
+            container.innerHTML = ""
+            let title = loadTitle(gameContainer)
+            title.style.top = "30%"
+            loadInstructionsButton(gameContainer)
+            loadPlayGameButton(gameContainer)
+        }, false)
+
+        container.append(skipButton)
+        return skipButton
+    }
+
+    function loadPreCred(container){
         let preCred = document.createElement('h1')
         preCred.id = "preCred"
         preCred.classList = "centerFitContent"
         preCred.textContent = "MZ"
-        preCred.style = `
-        animation-name: fadeInOut;
-        animation-duration: 2s;
-        opacity: 0
-        `
         
         container.append(preCred)
 
@@ -28,11 +87,7 @@ export function loadSplash(gameContainer) {
         title.id = "title"
         title.classList = "centerFitContent"
         title.innerHTML = `Milest<span id="headerPart">OWN</span>`
-        title.style.animation = "swipeIn 2s, fadeIn 2s"
-        //  `
-        // animation: swipeIn 2s,
-        //            fadeIn 2s;
-        // `
+
         container.append(title)
         return title
     }
@@ -42,11 +97,10 @@ export function loadSplash(gameContainer) {
         playGameButton.id = "playGameButton"
         playGameButton.classList = "centerFitContent button"
         playGameButton.textContent = "BEGIN"
-        playGameButton.style.animation = "fadeIn 2s"
         playGameButton.style.top = "40%"
 
 
-        playGameButton.addEventListener("click", ()=>{loadMap(maps.map5)}, false)
+        playGameButton.addEventListener("click", ()=>{loadMap(maps.map1)}, false)
         container.append(playGameButton)
 
         return playGameButton
@@ -57,7 +111,6 @@ export function loadSplash(gameContainer) {
         instructionsButton.id = "instructionsButton"
         instructionsButton.classList = "centerFitContent button"
         instructionsButton.textContent = "INSTRUCTIONS"
-        instructionsButton.style.animation = "fadeIn 2s"
         instructionsButton.style.top = "36%"
 
 
@@ -71,23 +124,37 @@ export function loadSplash(gameContainer) {
     function loadInstructions(dead){
         console.log(dead)
     }
+    
+    let skipButton = loadSkipButton(gameContainer)
+
     let preCred = loadPreCred(gameContainer)
+    preCred.animate(fadeInOut, 3000)
+    preCred.style.opacity = 0
 
     let title
-    setTimeout(() => {
-        title = loadTitle(gameContainer)
-        setTimeout(() => {
-            title.style.animation = "floatUp 2s"
-            title.style.top = "30%"
-            setTimeout(() => {
-                loadInstructionsButton(gameContainer)
-            }, 500);
-            setTimeout(() => {
-                loadPlayGameButton(gameContainer)
-            }, 300);
-        }, 2000);
-    }, 3000);
 
+    let titleBegin = setTimeout(() => {
+        title = loadTitle(gameContainer)
+        title.animate(swipeIn, 2000)
+        title.animate(fadeIn, 2000)
+        let titleRise = setTimeout(() => {
+            title.animate(floatUp, 2000)
+            title.style.top = "30%"
+            let instructionsButtonTimeOut = setTimeout(() => {
+                loadInstructionsButton(gameContainer).animate(fadeIn, 1000)
+            }, 700 );
+            let playButtonTimeout = setTimeout(() => {
+                loadPlayGameButton(gameContainer).animate(fadeIn, 1000)
+            }, 200 );
+            let removeSkipTimeOut = setTimeout(() => {
+                skipButton.remove()
+            }, 1500);
+            timeoutArray.push(instructionsButtonTimeOut, playButtonTimeout, removeSkipTimeOut)
+        }, 2300 );
+        timeoutArray.push(titleRise)
+    }, 3200 );
+
+    timeoutArray.push(titleBegin)
 
 }
 
