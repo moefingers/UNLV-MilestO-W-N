@@ -22,22 +22,32 @@ export async function loadMapSelector(gameContainer){
     for (let map in maps){
         mapArray.push(maps[map])
     }
+    let mapAmount = mapArray.length
     console.log(mapArray)
     console.log(mapArray[0])
 
+    //selector container
     let selectorContainer = document.createElement("div")
     selectorContainer.style = `
         outline: black solid 1px;
         position: absolute;
+        overflow:hidden;
         width: 100%;
         height: 80%;
-        opacity: 0
+        opacity: 0;
     `
     gameContainer.append(selectorContainer)
+    
+    //map name preview
+    let mapNameDiv = document.createElement("div")
+
+    //selector buttons
+    let selectLeftButton = document.createElement("div")
+    let selectRightButton = document.createElement("div")
 
 
-
-    let mapProperties = loadMap(mapArray[1], selectorContainer)
+    //load map based on selection
+    let mapProperties = loadMap(mapArray[selectorIndex], selectorContainer)
     selectorContainer.style.opacity = 1
     selectorContainer.animate(fadeIn, 200)
     mapProperties.mapAreaElement.animate(swipeIn, 500)
