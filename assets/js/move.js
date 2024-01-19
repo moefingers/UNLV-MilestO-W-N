@@ -24,6 +24,8 @@ export function move(element) {
         let allKeysReleased = true
         let x = locArray[0] * fullControlSize
         let y = locArray[1] * fullControlSize
+        let originalX
+        let originalY
         let coordinateX = locArray[0]
         let coordinateY = locArray[1]
     
@@ -85,6 +87,8 @@ export function move(element) {
                 let firstControlEdges
                 let secondControl
                 let secondControlEdges
+                let captureX
+                let captureY
 
                 
                 if(direction === 'left'){
@@ -103,6 +107,8 @@ export function move(element) {
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX}-y${coordinateY + 1}`)
                     // console.log(capturedEdge)
                     if(capturedEdge){
+                        captureX = true
+                        originalX = x
                         x-=fullControlSize/2
                         
                         firstControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY}`)
@@ -158,6 +164,8 @@ export function move(element) {
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY}`)
                     // console.log(capturedEdge)
                     if(capturedEdge){
+                        captureY = true
+                        originalY = y
                         y-=fullControlSize/2
                         
                         firstControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY}`)
@@ -211,6 +219,8 @@ export function move(element) {
                     capturedEdge = document.querySelector(`#control${controlTypeName}-x${coordinateX + 1}-y${coordinateY + 1}`)
                     // console.log(capturedEdge)
                     if(capturedEdge){
+                        captureX = true
+                        originalX = x
                         x+=fullControlSize/2
                         
                         firstControl = document.querySelector(`#control-x${coordinateX+1}-y${coordinateY}`)
@@ -268,6 +278,8 @@ export function move(element) {
                     // console.log(capturedEdge)
                     // this is if it does something \/
                     if(capturedEdge){
+                        captureY = true
+                        originalY = y
                         y+=fullControlSize/2
                         
                         firstControl = document.querySelector(`#control-x${coordinateX}-y${coordinateY+1}`)
@@ -310,22 +322,55 @@ export function move(element) {
                 }
                 element.style.left = x + 'px'
                 element.style.top = y + 'px'
+               
+                let moveAnimation
+                if (captureX){
+                    moveAnimation = [
+                        { left: originalX + "px", opacity: 1, easing: "ease-out" },
+                        {opacity: 0.5},
+                        { left: x + "px", opacity: 0.1, easing: "ease-in" }
+                    ]
+                } else if (captureY){
+                    moveAnimation = [
+                        {top: originalY + 'px', opacity: 1, easing: "ease-out" },
+                        {opacity: 0.5},
+                        {top: y + 'px', opacity: 1, easing: "ease-in" }
+                    ] 
+                }
 
-                if(capturedEdge){capturedEdge.style.background = teamColor}
+                let captureAnimation =[
+                    {background: capturedEdge.style.background, opacity: 1, easing: "ease-out" },
+                    {opacity: 0.5},
+                    {background: teamColor, opacity: 1, easing: "ease-in" }
+                ] 
+
+                if(capturedEdge){
+                    element.animate( moveAnimation,movementInterval)
+                    capturedEdge.animate(captureAnimation, movementInterval)
+                    setTimeout(() => {
+                        capturedEdge.style.background = teamColor
+                    }, movementInterval);
+                }
 
                 function allEqual(array){
                     return array.every(item => 
                         item.style.background == array[0].style.background)
                 }
-                
+              
+
+                function controlEdgesCheck(control, controlEdges){
+                    if(control){
+                    setTimeout(() => {
+                        if(allEqual(controlEdges)){control.style.background = teamColor}
+                        else if (!allEqual(controlEdges)){control.style.background = "gray"}
+                    }, movementInterval);
+                    }
+                }
                 if(firstControl){
-                    if(allEqual(firstControlEdges)){firstControl.style.background = teamColor}
-                    else if (!allEqual(firstControlEdges)){firstControl.style.background = "gray"}
+
                 }
-                if(secondControl){
-                    if(allEqual(secondControlEdges)){secondControl.style.background = teamColor}
-                    else if (!allEqual(secondControlEdges)){secondControl.style.background = "gray"}
-                }
+                controlEdgesCheck(firstControl, firstControlEdges)
+                controlEdgesCheck(secondControl, secondControlEdges)
 
 
                 movementAllowed = false

@@ -176,7 +176,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 
 
 
-    let characterSize = [100,100]
+    let characterSize = [50,50]
     generateCharacter("green", characterSize, fullMap.spawns.player1, ["w","a","s","d"], fullControlSize)
     generateCharacter("red", characterSize, fullMap.spawns.player2,  ["ArrowUp","ArrowLeft","ArrowDown","ArrowRight"],fullControlSize)
     generateCharacter("blue", characterSize, fullMap.spawns.player3,  ["8","4","5","6"],fullControlSize)
