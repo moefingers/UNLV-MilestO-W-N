@@ -1,6 +1,6 @@
 import { loadGameOver } from "./loadGameOver.js"
 
-export function generateTimer(time, container, playerObject){
+export function generateTimer(time, container, playerObject, scoreBoardElementsArray){
     
     let timerDiv = document.createElement("div")
     timerDiv.id = "timerDiv"
@@ -21,6 +21,6 @@ export function generateTimer(time, container, playerObject){
         console.log(timerDiv.time)
         timerDiv.time--
         timerDiv.textContent = (`TIME: ${timerDiv.time}`)
-        if(timerDiv.time <= 0){loadGameOver(container, playerObject); clearInterval(timerInterval)}
+        if(timerDiv.time <= 0){loadGameOver(container, playerObject, scoreBoardElementsArray); clearInterval(timerInterval)}
     }, 1000);
 }

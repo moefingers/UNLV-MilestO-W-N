@@ -36,6 +36,7 @@ export async function loadMapSelector(gameContainer){
     let characterCount = 1
     let mapProperties
     let characterColorArray = {1:"green",2:"red",3:"blue",4:"lightblue"}
+    let scoreBoardElementsArray = []
     let mapArray =  []
     for (let map in maps){
         mapArray.push({
@@ -239,10 +240,11 @@ export async function loadMapSelector(gameContainer){
           let playerObject = {}
           for(let count = 1; count <= characterCount; count++){
             generateCharacter(characterColorArray[count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, count)
-            generateScoreBoards(count, characterColorArray[count], gameContainer);
+            
+            scoreBoardElementsArray.push(generateScoreBoards(count, characterColorArray[count], gameContainer));
             playerObject[count] = characterColorArray[count]
           }
-          generateTimer(60,gameContainer,playerObject)      
+          generateTimer(5,innerGameContainer,playerObject, scoreBoardElementsArray)      
         }, false)
 
     gameContainer.append(playGameButton)

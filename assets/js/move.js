@@ -45,6 +45,7 @@ export function move(element, playerNumber) {
         element.style.top = y + 'px'
         
         function moveCharacter(){ 
+            
             // function checkValidTravelPath(coorX, coorY, addX, addY){
             //     let subtractedHalf = false
             //     let query
@@ -77,7 +78,7 @@ export function move(element, playerNumber) {
             //     }
             
             // }
-            console.log(direction)
+            //console.log(direction)
             if(direction == "null"){
                 // console.log("returned successfully")
                     return direction
@@ -374,6 +375,7 @@ export function move(element, playerNumber) {
 
                                     scoreObject[playerNumber]++
                                     document.getElementById("score" + playerNumber).textContent = `${teamColor.toUpperCase()}: ${scoreObject[playerNumber]}`
+                                    document.getElementById("score" + playerNumber).score = scoreObject[playerNumber]
                                 }
                             }
                             else if (!allEqual(controlEdges)){
@@ -387,6 +389,7 @@ export function move(element, playerNumber) {
 
                                     scoreObject[oldOwner]--
                                     document.getElementById("score" + oldOwner).textContent = `${oldColor.toUpperCase()}: ${scoreObject[oldOwner]}`
+                                    document.getElementById("score" + oldOwner).score = scoreObject[oldOwner]
                                 }
                             }
                         //}, movementInterval);
@@ -401,9 +404,12 @@ export function move(element, playerNumber) {
                 setTimeout(() => {movementAllowed = true}, movementInterval)
                 //console.log(coordinateX, coordinateY)
             }
+            let timerDivTime = parseInt(document.getElementById("timerDiv").time)
+            console.log(timerDivTime)
+            if(timerDivTime <= 0){clearInterval(intervalForMovement)}
         }
 
-        setInterval(moveCharacter, 1)
+        let intervalForMovement = setInterval(moveCharacter, 1)
         
         document.addEventListener('keydown', function(e){
             //if(e.repeat) return;
