@@ -1,6 +1,7 @@
 import { loadMap } from "./loadMap.js";
 import { generateCharacter } from "./generateCharacter.js";
 import { generateScoreBoards } from "./generateScoreBoards.js";
+import { generateTimer } from "./generateTimer.js";
 import maps from '../data/maps.json' assert { type: 'json' };
 
 let swipeIn = [
@@ -34,7 +35,7 @@ export async function loadMapSelector(gameContainer){
     let selectorIndex = 0
     let characterCount = 1
     let mapProperties
-    let characterColorArray = {char1:"green",char2:"red",char3:"blue",char4:"lightblue"}
+    let characterColorArray = {1:"green",2:"red",3:"blue",4:"lightblue"}
     let mapArray =  []
     for (let map in maps){
         mapArray.push({
@@ -123,7 +124,7 @@ export async function loadMapSelector(gameContainer){
 
     function loadCharactersOnMap(mapProperties){
         for(let count = 1; count <= characterCount; count++){
-            generateCharacter(characterColorArray["char" + count], characterSize, mapProperties.spawns["player" + count], false, mapProperties.fullControlSize, mapProperties.mapAreaElement, `previewChar${count}`)
+            generateCharacter(characterColorArray[count], characterSize, mapProperties.spawns["player" + count], false, mapProperties.fullControlSize, mapProperties.mapAreaElement, `previewChar${count}`)
             
         }   
 
@@ -166,7 +167,7 @@ export async function loadMapSelector(gameContainer){
             let characterBlob = document.createElement("div")
             characterBlob.id = `characterBlob${count}`
             characterBlob.className = `polygonDeformedOctagon`
-            characterBlob.style = `width: ${characterSize[0]}px; height: ${characterSize[1]}px; background:${characterColorArray["char" + count]}; margin:auto;`
+            characterBlob.style = `width: ${characterSize[0]}px; height: ${characterSize[1]}px; background:${characterColorArray[count]}; margin:auto;`
 
             let changeCharacterDown = document.createElement("div")
             changeCharacterUp.id = `changeCharacterDown${count}`
@@ -235,10 +236,13 @@ export async function loadMapSelector(gameContainer){
           innerGameContainer.style = "width: 100%; height: 100%"
           gameContainer.append(innerGameContainer)
           let mapProperties = loadMap(maps[mapArray[selectorIndex].mapName], innerGameContainer)//loadmap
+          let playerObject = {}
           for(let count = 1; count <= characterCount; count++){
-            generateCharacter(characterColorArray["char" + count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, count)
-            generateScoreBoards(count, characterColorArray["char" + count], gameContainer);
-            }      
+            generateCharacter(characterColorArray[count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, count)
+            generateScoreBoards(count, characterColorArray[count], gameContainer);
+            playerObject[count] = characterColorArray[count]
+          }
+          generateTimer(60,gameContainer,playerObject)      
         }, false)
 
     gameContainer.append(playGameButton)
