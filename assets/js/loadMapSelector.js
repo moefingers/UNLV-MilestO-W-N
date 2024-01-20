@@ -244,7 +244,7 @@ export async function loadMapSelector(gameContainer){
             scoreBoardElementsArray.push(generateScoreBoards(count, characterColorArray[count], gameContainer));
             playerObject[count] = characterColorArray[count]
           }
-          generateTimer(5,innerGameContainer,playerObject, scoreBoardElementsArray)      
+          generateTimer(80,innerGameContainer,playerObject, scoreBoardElementsArray)      
         }, false)
 
     gameContainer.append(playGameButton)
