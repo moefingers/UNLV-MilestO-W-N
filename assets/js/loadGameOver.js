@@ -56,7 +56,7 @@ export function loadGameOver(container, playerObject, scoreBoardElementsArray) {
         playerScoreElement.animate(endAnimation, 1500)
 
         lastScore = playerScoreElement.score
-        if (lastScore > highestScore){highestScore = lastScore; winnerOrTie = "WINNER";winnerArray.push(player)}
+        if (lastScore > highestScore){highestScore = lastScore; winnerOrTie = "WINNER"; winnerArray = []; winnerArray.push(player)}
         else if (lastScore == highestScore){winnerOrTie = "TIED"; winnerArray.push(player)}
 
         if (highestScore == 0) {winnerOrTie = "NO WINNERS"; winnerArray = []}
