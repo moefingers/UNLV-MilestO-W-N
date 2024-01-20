@@ -44,6 +44,7 @@ let floatUp = [
 
 
 export function loadSplash(gameContainer) {
+    gameContainer.innerHTML = ""
     let clicked = false
     let timeoutArray = []
     let splashElementArray = []
@@ -57,16 +58,20 @@ export function loadSplash(gameContainer) {
         skipButton.style.top = "80%"
         skipButton.style.color = "lightgray"
         skipButton.addEventListener("click",()=>{
-            timeoutArray.forEach(timeout => {clearTimeout(timeout)})
-            container.innerHTML = ""
-            let title = loadTitle(gameContainer)
-            title.style.top = "30%"
-            loadInstructionsButton(gameContainer)
-            loadPlayGameButton(gameContainer)
+            skipAnimationFunction(container)
         }, false)
 
         container.append(skipButton)
         return skipButton
+    }
+
+    function skipAnimationFunction(container){
+        timeoutArray.forEach(timeout => {clearTimeout(timeout)})
+        container.innerHTML = ""
+        let title = loadTitle(container)
+        title.style.top = "30%"
+        loadInstructionsButton(container)
+        loadPlayGameButton(container)
     }
 
     function loadPreCred(container){
@@ -126,7 +131,19 @@ export function loadSplash(gameContainer) {
         instructionsButton.style.top = "36%"
 
 
-        instructionsButton.addEventListener("click", ()=>{if(!clicked){clicked = true; loadInstructions(container)}}, false)
+        instructionsButton.addEventListener("click", ()=>{
+            if(!clicked){ clicked = true;
+            splashElementArray.forEach(element => {
+                element.animate(fadeOut, 200)
+                setTimeout(() => {
+                    element.remove()
+                }, 200);
+            })
+            setTimeout(() => {
+                loadInstructions(container)
+                clicked = false
+            }, 200);
+        }}, false)
         container.append(instructionsButton)
         splashElementArray.push(instructionsButton)
 
@@ -134,8 +151,52 @@ export function loadSplash(gameContainer) {
     }
 
 
-    function loadInstructions(dead){
-        console.log(dead)
+    function loadInstructions(container){
+        let instructionsDiv = document.createElement("div")
+        instructionsDiv.id = "instructionsDiv"
+        instructionsDiv.className = "centerFitContent"
+        instructionsDiv.innerHTML = `
+        Movement
+        <br>Use the following keys based on the player to move your character:
+        <br>Player 1: WASD keys.
+        <br>Player 2: Arrow keys.
+        <br>Player 3: 8, 4, 5, 6 keys.
+        <br>Player 4: IJKL keys.
+
+        <br>How to Play
+        <br>Move your character to color the path and surround each block, capturing it as your territory once all four sides are in your color.
+
+        <br>Goal
+        <br>The player with the most captured territories after time runs out wins.
+
+
+        `
+        instructionsDiv.style = `
+        
+        `
+
+        container.append(instructionsDiv)
+        clicked = false
+        instructionsDiv.animate(fadeIn, 400)
+
+        let backButton = document.createElement("div")
+        backButton.id = "backButton"
+        backButton.classList = "centerFitContent button"
+        backButton.textContent = "BACK"
+        backButton.style = "top: 80%"
+        backButton.addEventListener("click",()=>{
+            if(clicked == false){clicked = true
+                instructionsDiv.animate(fadeOut,400)
+                backButton.animate(fadeOut,400)
+                setTimeout(() => {
+                    skipAnimationFunction(gameContainer)
+                    gameContainer.animate(fadeIn, 400)
+                    clicked = false
+                }, 400);
+            }
+        },false)
+        container.append(backButton)
+        backButton.animate(fadeIn, 900)
     }
     
     let skipButton = loadSkipButton(gameContainer)
