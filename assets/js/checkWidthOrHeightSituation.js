@@ -1,6 +1,6 @@
 export function checkWidthOrHeightSituation(widthValue, heightValue, mapWidth, mapHeight, useArea){
 
-    console.log(widthValue, heightValue)
+    //console.log(widthValue, heightValue)
     if ((heightValue / mapHeight)< (widthValue /mapWidth)){  //height situation
         return ((heightValue * useArea))/mapHeight
         //fullControlSizeByPercent = (((window.innerHeight * 0.96) - 40)/map.length)/window.innerHeight * 100 // does not yet work, not in use

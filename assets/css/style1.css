@@ -4,6 +4,9 @@
    user-select: none;
 } 
 
+/* #gameContainer {
+    outline: black solid 1px
+} */
 
 body {
     text-align: center;
@@ -47,7 +50,32 @@ body {
 }
 
 
+.leftArrow {
+    clip-path: polygon(35% 100%, 0 50%, 35% 0, 50% 0, 35% 25%, 100% 25%, 100% 75%, 35% 75%, 50% 100%);
+}
 
+.rightArrow {
+    clip-path: polygon(65% 100%, 100% 50%, 65% 0, 50% 0, 65% 25%, 0 25%, 0 75%, 65% 75%, 50% 100%);
+
+}
+
+.downChevron {
+    clip-path: polygon(100% 80%, 50% 100%, 0 80%, 0 0, 50% 20%, 100% 0);
+
+}
+
+.upChevron {
+    clip-path: polygon(100% 100%, 50% 80%, 0 100%, 0 20%, 50% 0, 100% 20%);
+
+}
+
+.plusSymbol {
+    clip-path: polygon(0 35%, 35% 35%, 35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%);
+}
+
+.minusSymbol {
+    clip-path: polygon(0 35%, 100% 35%, 100% 65%, 0 65%);
+}
 
 .controlBlock {
     clip-path: polygon(
@@ -107,7 +135,6 @@ body {
 }
 
 .polygonDeformedOctagon {
-    position: fixed;
     clip-path: polygon(
         50% 0%,
         95% 20%,

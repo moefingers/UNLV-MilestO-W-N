@@ -22,6 +22,7 @@ if (you have a small heightValue for the window), and (a large map.length (how m
 */
 
 //TBD dynamic window resizing during gameplay
+console.log(container.parentElement.style.width)
     let containerWidthInPx = parseInt(container.parentElement.style.width) * parseInt(container.style.width) /100
     let containerHeightInPx = parseInt(container.parentElement.style.height) * parseInt(container.style.height) /100
 

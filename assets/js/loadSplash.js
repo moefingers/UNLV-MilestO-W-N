@@ -126,7 +126,7 @@ export function loadSplash(gameContainer) {
         instructionsButton.style.top = "36%"
 
 
-        instructionsButton.addEventListener("click", ()=>{if(!clicked){cliekd = true; loadInstructions(container)}}, false)
+        instructionsButton.addEventListener("click", ()=>{if(!clicked){clicked = true; loadInstructions(container)}}, false)
         container.append(instructionsButton)
         splashElementArray.push(instructionsButton)
 
