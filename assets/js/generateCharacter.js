@@ -5,12 +5,12 @@ Param 1 string
 Param 2 (array) integers will become pixels exactly  [0] == width  && [1] == height
 Param 3 (array) integers will denote how many whole blocks across and down [0] == across  && [1] == down
 */
-export async function generateCharacter(teamColor, sizeArray, locArray, keyArray, fullControlSize, mapAreaDiv) {
+export async function generateCharacter(teamColor, sizeArray, locArray, keyArray, fullControlSize, mapAreaDiv, identifier) {
     let left = locArray[0] * fullControlSize
     let top = locArray[1] * fullControlSize
 
     let characterBlob = document.createElement("div")
-    characterBlob.id = teamColor + "blob"
+    characterBlob.id = identifier
     characterBlob.style = (`
     background:${teamColor};
     width:${sizeArray[0]}px;
