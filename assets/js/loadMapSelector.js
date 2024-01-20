@@ -17,14 +17,17 @@ let fadeIn = [
 ]
 
 export async function loadMapSelector(gameContainer){
-    let selectorIndex = 0
+    let selectorIndex = 4
     let mapArray =  []
     for (let map in maps){
-        mapArray.push(maps[map])
+        mapArray.push({mapName:map, map:maps[map]["map"], spawns:maps[map]["spawns"]})
     }
+
+    
+
     let mapAmount = mapArray.length
     console.log(mapArray)
-    console.log(mapArray[0])
+    
 
     //selector container
     let selectorContainer = document.createElement("div")
@@ -40,17 +43,33 @@ export async function loadMapSelector(gameContainer){
     
     //map name preview
     let mapNameDiv = document.createElement("div")
+    mapNameDiv.textContent = mapArray[selectorIndex].mapName
+    mapNameDiv.classList = "centerFitContent"
+    mapNameDiv.style = `
+        outline: black solid 1px;
+        position: absolute;
+        overflow:hidden;
+        width: fit-content;
+        height: fit-content;
+        top: 80%;
+        opacity: 0;
+    `
+    gameContainer.append(mapNameDiv)
+    mapNameDiv.style.opacity = 1
+    mapNameDiv.animate(fadeIn, 200)
+
 
     //selector buttons
     let selectLeftButton = document.createElement("div")
     let selectRightButton = document.createElement("div")
 
 
-    //load map based on selection
+    //load map based on selection and load other elements
     let mapProperties = loadMap(mapArray[selectorIndex], selectorContainer)
     selectorContainer.style.opacity = 1
     selectorContainer.animate(fadeIn, 200)
     mapProperties.mapAreaElement.animate(swipeIn, 500)
+
 
     let characterSize = [50,50]
     generateCharacter("green", characterSize, mapProperties.spawns.player1, false, mapProperties.fullControlSize)
