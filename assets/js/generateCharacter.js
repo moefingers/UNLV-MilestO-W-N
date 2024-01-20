@@ -10,7 +10,7 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
     let top = locArray[1] * fullControlSize
 
     let characterBlob = document.createElement("div")
-    characterBlob.id = identifier
+    characterBlob.id = "blob" + identifier
     characterBlob.style = (`
     background:${teamColor};
     width:${sizeArray[0]}px;
@@ -48,6 +48,6 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
 
     mapAreaDiv.append(characterBlob)
 
-    if (keyArray) {move(characterBlob).withKeys(locArray, keyArray, fullControlSize, teamColor)}
+    if (keyArray) {move(characterBlob, identifier).withKeys(locArray, keyArray, fullControlSize, teamColor)}
     return {blob: characterBlob}
 }

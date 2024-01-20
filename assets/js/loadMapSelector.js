@@ -236,7 +236,7 @@ export async function loadMapSelector(gameContainer){
           gameContainer.append(innerGameContainer)
           let mapProperties = loadMap(maps[mapArray[selectorIndex].mapName], innerGameContainer)//loadmap
           for(let count = 1; count <= characterCount; count++){
-            generateCharacter(characterColorArray["char" + count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, `character${count}`)
+            generateCharacter(characterColorArray["char" + count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, count)
             generateScoreBoards(count, characterColorArray["char" + count], gameContainer);
             }      
         }, false)

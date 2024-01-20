@@ -1,6 +1,7 @@
 
+let scoreObject = {1:0,2:0,3:0,4:0}
 
-export function move(element) {
+export function move(element, playerNumber) {
 
         let direction
     function moveToCoordinates(locArray) {
@@ -14,6 +15,7 @@ export function move(element) {
     }
 
     function moveWithKeys(locArray, keyArray, fullControlSize, teamColor, callback){
+
         let movementInterval = 300
         console.log(fullControlSize)
         let microHalfFullControlSize = fullControlSize /2 /300 * 10
@@ -77,11 +79,11 @@ export function move(element) {
             // }
             console.log(direction)
             if(direction == "null"){
-                console.log("returned successfully")
+                // console.log("returned successfully")
                     return direction
                 }
             if(movementAllowed === true && direction != "null" && !allKeysReleased){
-                console.log("running with direction as " + direction)
+                // console.log("running with direction as " + direction)
                 let capturedEdge
                 let firstControl
                 let firstControlEdges
@@ -363,13 +365,29 @@ export function move(element) {
                     if(control){
                         //setTimeout(() => {
                             if(allEqual(controlEdges)){
-                                control.animate([{background:control.style.background},{background:teamColor}], movementInterval)
-                                control.style.background = teamColor
+
+                                if (control.style.background != teamColor){
+                                    control.animate([{background:control.style.background},{background:teamColor}], movementInterval)
+                                    control.owner = playerNumber
+                                    console.log(control.owner)
+                                    control.style.background = teamColor
+
+                                    scoreObject[playerNumber]++
+                                    document.getElementById("score" + playerNumber).textContent = `${teamColor.toUpperCase()}: ${scoreObject[playerNumber]}`
+                                }
                             }
                             else if (!allEqual(controlEdges)){
-                                if (control.style.background !="gray")
-                                control.animate([{background:control.style.background},{opacity: 0},{background:"gray"}], movementInterval)
-                                control.style.background = "gray"
+                                if (control.style.background !="gray"){
+                                    let oldOwner = control.owner
+                                    let oldColor = control.style.background
+                                    console.log(oldOwner)
+                                    control.animate([{background:control.style.background},{opacity: 0},{background:"gray"}], movementInterval)
+                                    control.style.background = "gray"
+                                    control.owner = ""
+
+                                    scoreObject[oldOwner]--
+                                    document.getElementById("score" + oldOwner).textContent = `${oldColor.toUpperCase()}: ${scoreObject[oldOwner]}`
+                                }
                             }
                         //}, movementInterval);
                     }
@@ -407,27 +425,27 @@ export function move(element) {
                     direction = 'left'
                     allKeysReleased = false
                     formatKeyToPush(leftKey)
-                    if(!keysHeld.includes(leftKey) && !keysHeld.includes(leftKey.toUpperCase) && !keysHeld.includes(leftKey.toLowerCase)) {keysHeld.push(keyToPush)}
+                    if(!keysHeld.includes(leftKey) && !keysHeld.includes(leftKey.toUpperCase()) && !keysHeld.includes(leftKey.toLowerCase())) {keysHeld.push(keyToPush)}
                 }
                 if(e.key === upKey || e.key === upKey.toUpperCase()){
                     direction = 'up'
                     allKeysReleased = false
                     formatKeyToPush(upKey)
-                    if(!keysHeld.includes(upKey) && !keysHeld.includes(upKey.toUpperCase) && !keysHeld.includes(upKey.toLowerCase)) {keysHeld.push(keyToPush)}
+                    if(!keysHeld.includes(upKey) && !keysHeld.includes(upKey.toUpperCase()) && !keysHeld.includes(upKey.toLowerCase())) {keysHeld.push(keyToPush)}
                 }
                 if(e.key === rightKey || e.key === rightKey.toUpperCase()){
                     direction = 'right'
                     allKeysReleased = false
                     formatKeyToPush(rightKey)
-                    if(!keysHeld.includes(rightKey) && !keysHeld.includes(rightKey.toUpperCase) && !keysHeld.includes(rightKey.toLowerCase)) {keysHeld.push(keyToPush)}
+                    if(!keysHeld.includes(rightKey) && !keysHeld.includes(rightKey.toUpperCase()) && !keysHeld.includes(rightKey.toLowerCase())) {keysHeld.push(keyToPush)}
                 }
                 if(e.key === downKey || e.key === downKey.toUpperCase()){
                     direction = 'down'
                     allKeysReleased = false
                     formatKeyToPush(downKey)
-                    if(!keysHeld.includes(downKey) && !keysHeld.includes(downKey.toUpperCase) && !keysHeld.includes(downKey.toLowerCase)) {keysHeld.push(keyToPush)}
+                    if(!keysHeld.includes(downKey) && !keysHeld.includes(downKey.toUpperCase()) && !keysHeld.includes(downKey.toLowerCase())) {keysHeld.push(keyToPush)}
                 }
-                console.log(direction)
+              //  console.log(direction)
             //}
             //movementAllowed = false
             //console.log("keys held below")
@@ -437,7 +455,7 @@ export function move(element) {
         
         document.addEventListener('keyup', function(e){
             
-            if(keysHeld.includes(e.key) || keysHeld.includes(e.key.toLowerCase) || keysHeld.includes(e.key.toUpperCase)){
+            if(keysHeld.includes(e.key) || keysHeld.includes(e.key.toLowerCase()) || keysHeld.includes(e.key.toUpperCase())){
                 // let newKeys = keysHeld.filter((keys) => keys != e.key)
                 // keysHeld = newKeys
                 
