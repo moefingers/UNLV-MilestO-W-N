@@ -1,6 +1,14 @@
 
 let scoreObject = {1:0,2:0,3:0,4:0}
 
+let pulse = [
+
+    {offset: 0, fontSize: "20px", opacity: 1, easing: "ease-out"},
+    {offset: 0.6, fontSize: "30px", opacity: .5},
+    {offset: 0.8, fontSize: "30px", opacity: .5},
+    {offset: 1, fontSize: "20px", opacity: 1}
+]
+
 export function move(element, playerNumber) {
 
         let direction
@@ -374,8 +382,10 @@ export function move(element, playerNumber) {
                                     control.style.background = teamColor
 
                                     scoreObject[playerNumber]++
-                                    document.getElementById("score" + playerNumber).textContent = `${teamColor.toUpperCase()}: ${scoreObject[playerNumber]}`
-                                    document.getElementById("score" + playerNumber).score = scoreObject[playerNumber]
+                                    let scoreElement = document.getElementById("score" + playerNumber)
+                                    scoreElement.textContent = `${teamColor.toUpperCase()}: ${scoreObject[playerNumber]}`
+                                    scoreElement.score = scoreObject[playerNumber]
+                                    scoreElement.animate(pulse, 700)
                                 }
                             }
                             else if (!allEqual(controlEdges)){
@@ -388,8 +398,10 @@ export function move(element, playerNumber) {
                                     control.owner = ""
 
                                     scoreObject[oldOwner]--
-                                    document.getElementById("score" + oldOwner).textContent = `${oldColor.toUpperCase()}: ${scoreObject[oldOwner]}`
-                                    document.getElementById("score" + oldOwner).score = scoreObject[oldOwner]
+                                    let oldScoreElement = document.getElementById("score" + oldOwner)
+                                    oldScoreElement.textContent = `${oldColor.toUpperCase()}: ${scoreObject[oldOwner]}`
+                                    oldScoreElement.score = scoreObject[oldOwner]
+                                    oldScoreElement.animate(pulse,700)
                                 }
                             }
                         //}, movementInterval);
