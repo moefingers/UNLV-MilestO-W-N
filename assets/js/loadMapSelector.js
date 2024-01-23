@@ -36,6 +36,7 @@ export async function loadMapSelector(gameContainer){
     let characterCount = 1
     let mapProperties
     let characterColorArray = {1:"green",2:"red",3:"blue",4:"lightblue"}
+    let colorArray = ["red","orange","yellow","green","blue","indigo","violet"]
     let scoreBoardElementsArray = []
     let mapArray =  []
     for (let map in maps){
@@ -164,6 +165,7 @@ export async function loadMapSelector(gameContainer){
             changeCharacterUp.id = `changeCharacterUp${count}`
             changeCharacterUp.className = "upChevron"
             changeCharacterUp.style = `width: 30%; height: 20%; background:black; margin:auto;`
+            changeCharacterUp.addEventListener("click", ()=>{}, false)
 
             let characterBlob = document.createElement("div")
             characterBlob.id = `characterBlob${count}`
@@ -230,12 +232,14 @@ export async function loadMapSelector(gameContainer){
     `
     console.log(maps[mapArray[selectorIndex].mapName])
     console.log(gameContainer)
-    playGameButton.addEventListener("click",()=>{
-        gameContainer.innerHTML = "";
-         let innerGameContainer = document.createElement("div");
+    playGameButton.addEventListener("click",()=>{ 
+        if(!clicked){clicked = true
+          gameContainer.innerHTML = "";
+          let innerGameContainer = document.createElement("div");
           innerGameContainer.id = "innerGameContainer"
           innerGameContainer.style = "width: 100%; height: 100%"
           gameContainer.append(innerGameContainer)
+          innerGameContainer.animate(fadeIn, 500)
           let mapProperties = loadMap(maps[mapArray[selectorIndex].mapName], innerGameContainer)//loadmap
           let playerObject = {}
           for(let count = 1; count <= characterCount; count++){
@@ -244,7 +248,8 @@ export async function loadMapSelector(gameContainer){
             scoreBoardElementsArray.push(generateScoreBoards(count, characterColorArray[count], gameContainer));
             playerObject[count] = characterColorArray[count]
           }
-          generateTimer(15,innerGameContainer,playerObject, scoreBoardElementsArray)      
+          generateTimer(80,innerGameContainer,playerObject, scoreBoardElementsArray)
+        }      
         }, false)
 
     gameContainer.append(playGameButton)
