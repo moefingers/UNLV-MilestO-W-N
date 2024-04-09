@@ -92,8 +92,8 @@ export function loadGameOver(container, playerObject, scoreBoardElementsArray) {
     setTimeout(() => {
         container.innerHTML = ""
         container.append(winnerDiv)
-        winnerDiv.animate(enlargeFromTo("0rem", "1.8rem"), 1500)
-        winnerDiv.style.fontSize = "1.8rem"
+        winnerDiv.animate(enlargeFromTo("0rem", "2.4rem"), 1500)
+        winnerDiv.style.fontSize = "2.4rem"
     }, 400);
 
 //    1

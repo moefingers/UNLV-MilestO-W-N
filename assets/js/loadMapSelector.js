@@ -88,6 +88,7 @@ export async function loadMapSelector(gameContainer){
     left: 50%;
     top: 80%;
     translate: -50% 10%;
+    font-size: 1.4rem
     `
 
     function changeMapSelector(direction, characterCount, container){
@@ -133,6 +134,8 @@ export async function loadMapSelector(gameContainer){
     }
 
     function loadCharacterSelectors(direction, container) {
+        let containerWidthInPx = parseInt(container.parentElement.style.width) * parseInt(container.style.width) /100
+        let containerHeightInPx = parseInt(container.parentElement.style.height) * parseInt(container.style.height) /100
         characterCount += direction
         let oldBlobList = undefined
         oldBlobList = document.querySelectorAll("#mapArea > .polygonDeformedOctagon")
@@ -145,7 +148,7 @@ export async function loadMapSelector(gameContainer){
             let minusCharacterCountButton = document.createElement("div")
             minusCharacterCountButton.id = "minusCharacterCountButton"
             minusCharacterCountButton.classList = "minusSymbol"
-            minusCharacterCountButton.style = `width: 20%; height: 100%; background:black`
+            minusCharacterCountButton.style = `width: ${containerHeightInPx}px; height: 100%; background:black`
             minusCharacterCountButton.addEventListener("click", ()=>{loadCharacterSelectors(-1, container)})
         
             container.append(minusCharacterCountButton)
@@ -184,7 +187,7 @@ export async function loadMapSelector(gameContainer){
             let plusCharacterCountButton = document.createElement("div")
             plusCharacterCountButton.id = "plusCharacterCountButton"
             plusCharacterCountButton.classList = "plusSymbol"
-            plusCharacterCountButton.style = `width: 20%; height: 100%; background:black;`
+            plusCharacterCountButton.style = `width: ${containerHeightInPx}px; height: 100%; background:black;`
             plusCharacterCountButton.addEventListener("click", ()=>{loadCharacterSelectors(1, container)})
         
             container.append(plusCharacterCountButton)
