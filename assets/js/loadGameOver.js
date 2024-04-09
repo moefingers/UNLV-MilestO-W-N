@@ -35,6 +35,15 @@ let floatUp = [
 
 ]
 
+function enlargeFromTo(from, to){
+    return [
+
+        {fontSize: from},
+        {fontSize: to}
+
+    ]
+}
+
 
 
 
@@ -48,13 +57,11 @@ export function loadGameOver(container, playerObject, scoreBoardElementsArray) {
     let winnerOrTie
     for (let player in playerObject) {
         let playerScoreElement = document.getElementById(`score${player}`)
-        let newFontSize = "100px"
-        let endAnimation = [{fontSize: playerScoreElement.style.fontSize},{fontSize: newFontSize}]
 
-        playerObjectWithScores[player] = {color: playerObject[player], score:playerScoreElement.score, endAnimation:endAnimation}
-        playerScoreElement.style.fontSize = newFontSize
-        playerScoreElement.animate(endAnimation, 1500)
-
+        playerObjectWithScores[player] = {color: playerObject[player], score:playerScoreElement.score}
+        
+        playerScoreElement.animate(enlargeFromTo(playerScoreElement.style.fontSize, "2rem"), 1500)
+        playerScoreElement.style.fontSize = "2rem"
         lastScore = playerScoreElement.score
         if (lastScore > highestScore){highestScore = lastScore; winnerOrTie = "WINNER"; winnerArray = []; winnerArray.push(player)}
         else if (lastScore == highestScore){winnerOrTie = "TIED"; winnerArray.push(player)}
@@ -75,7 +82,7 @@ export function loadGameOver(container, playerObject, scoreBoardElementsArray) {
    let winnerDiv = document.createElement("h1")
    winnerDiv.id = "winnerDiv"
    winnerDiv.classList = "centerFitContent"
-   winnerDiv.style.fontSize = "0px"
+   winnerDiv.style.top = "50%"
    winnerDiv.innerHTML = `
    ${winnerOrTie}<br>
    ${winnerTextList}
@@ -85,8 +92,8 @@ export function loadGameOver(container, playerObject, scoreBoardElementsArray) {
     setTimeout(() => {
         container.innerHTML = ""
         container.append(winnerDiv)
-        winnerDiv.animate([{}, {fontSize: "80px"}], 1500)
-        winnerDiv.style.fontSize = "80px"
+        winnerDiv.animate(enlargeFromTo("0rem", "1.8rem"), 1500)
+        winnerDiv.style.fontSize = "1.8rem"
     }, 400);
 
 //    1

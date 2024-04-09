@@ -1,7 +1,44 @@
-  
+@font-face {
+    font-family: 'Digital Dream Fat Narrow';
+    src: url('../fonts/DigitalDreamFatNarrow.eot');
+    src: url('../fonts/DigitalDreamFatNarrow.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/DigitalDreamFatNarrow.woff2') format('woff2'),
+        url('../fonts/DigitalDreamFatNarrow.woff') format('woff'),
+        url('../fonts/DigitalDreamFatNarrow.svg#DigitalDreamFatNarrow') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'Digital Dream Narrow';
+    src: url('../fonts/DigitalDreamNarrow.eot');
+    src: url('../fonts/DigitalDreamNarrow.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/DigitalDreamNarrow.woff2') format('woff2'),
+        url('../fonts/DigitalDreamNarrow.woff') format('woff'),
+        url('../fonts/DigitalDreamNarrow.svg#DigitalDreamNarrow') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'Digital Dream Regular';
+    src: url('../fonts/DigitalDreamRegular.eot');
+    src: url('../fonts/DigitalDreamRegular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/DigitalDreamRegular.woff2') format('woff2'),
+        url('../fonts/DigitalDreamRegular.woff') format('woff'),
+        url('../fonts/DigitalDreamRegular.svg#DigitalDreamRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
 *{
    /* outline: black solid 1px; */
    user-select: none;
+   font-family: "Digital Dream Regular", Courier, monospace;
+   font-style: normal;
+   font-weight: normal;
 } 
 
 /* #gameContainer {
@@ -18,6 +55,10 @@ body {
     position: absolute;
 }
 
+#preCred {
+    font-size: 3em;
+}
+
 .centerFitContent {
     padding:0;
     margin:auto;
@@ -26,10 +67,13 @@ body {
 
     translate: -50% -50%;
     left: 50%;
-    top: 40%;
     /* outline: black solid 1px; */
 }
 
+.button {
+    color: black;
+    font-size: 3.5em
+}
 .button:hover {
     color: darkred
 }
@@ -38,6 +82,9 @@ body {
     font-weight: bold;
 }
 
+#title {
+    font-size:  7rem;
+}
 #headerPart {
     color:red;
 }

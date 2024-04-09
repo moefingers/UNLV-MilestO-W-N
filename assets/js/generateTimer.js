@@ -16,8 +16,11 @@ export function generateTimer(time, container, playerObject, scoreBoardElementsA
     timerDiv.textContent = (`TIME: ${time}`)
     timerDiv.classList = "centerFitContent"
     timerDiv.style = `
-    top: 0%;
+    top: 0;
+    translate: -50% 0;
+    font-size: 2rem
     `
+    timerDiv.style.backgroundColor = "rgba(255,255,255,0.5)"
 
     container.append(timerDiv)
 

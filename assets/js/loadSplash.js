@@ -4,13 +4,14 @@ import { loadMapSelector } from "./loadMapSelector.js";
 window.onresize = checkMinimumWindowSize
 checkMinimumWindowSize()
 
-let fadeInOut = [
-
-    {offset: 0, left: "-10%", opacity: 0, easing: "ease-out"},
-    {offset: 0.8, left: "50%", opacity: 1},
-    {offset: 0.9, left: "50%", opacity: 1},
-    {offset: 1, left: "60%", opacity: 0}
-]
+function swipeFadeInOut(start, middle, end){ // -10 50 60
+    return [
+        {offset: 0, left: start, opacity: 0, easing: "ease-out"},
+        {offset: 0.8, left: middle, opacity: 1},
+        {offset: 0.9, left: middle, opacity: 1},
+        {offset: 1, left: end, opacity: 0}
+    ]
+} 
 
 let swipeIn = [
 
@@ -33,12 +34,14 @@ let fadeOut = [
 
 ]
 
-let floatUp = [
+function floatFromTo(from, to){
+    return [
 
-    {top: "40%", easing: "ease-out"},
-    {top: "30%", easing: "ease-in"}
+        {top: from, easing: "ease-out"},
+        {top: to, easing: "ease-in"}
 
-]
+    ]
+}
 
 
 
@@ -50,12 +53,12 @@ export function loadSplash(gameContainer) {
     let splashElementArray = []
 
 
-    function loadSkipButton(container){
+    function loadSkipButton(container, fromTop){
         let skipButton = document.createElement('div')
         skipButton.id = "skipButton"
         skipButton.classList = "centerFitContent"
         skipButton.textContent = "skip"
-        skipButton.style.top = "80%"
+        skipButton.style.top = fromTop
         skipButton.style.color = "lightgray"
         skipButton.addEventListener("click",()=>{
             skipAnimationFunction(container)
@@ -65,44 +68,45 @@ export function loadSplash(gameContainer) {
         return skipButton
     }
 
-    function skipAnimationFunction(container){
+    function skipAnimationFunction(container, fromTop){
         timeoutArray.forEach(timeout => {clearTimeout(timeout)})
         container.innerHTML = ""
-        let title = loadTitle(container)
-        title.style.top = "30%"
-        loadInstructionsButton(container)
-        loadPlayGameButton(container)
+        let title = loadTitle(container, "20%")
+        loadInstructionsButton(container, "55%")
+        loadPlayGameButton(container, "40%")
     }
 
-    function loadPreCred(container){
+    function loadPreCred(container, fromTop){
         let preCred = document.createElement('h1')
         preCred.id = "preCred"
         preCred.classList = "centerFitContent"
         preCred.textContent = "MZ"
+        preCred.style.top = fromTop
         
         container.append(preCred)
 
         return preCred
     }
     
-    function loadTitle(container){
+    function loadTitle(container, fromTop){
         let title = document.createElement(`h1`)
         title.id = "title"
         title.classList = "centerFitContent"
         title.innerHTML = `Milest<span id="headerPart">OWN</span>`
 
+        title.style.top = fromTop
         container.append(title)
         splashElementArray.push(title)
         return title
     }
 
-    function loadPlayGameButton(container){
+    function loadPlayGameButton(container, fromTop){
         let playGameButton = document.createElement("div")
         playGameButton.id = "playGameButton"
         playGameButton.classList = "centerFitContent button"
         playGameButton.textContent = "BEGIN"
-        playGameButton.style.top = "40%"
 
+        playGameButton.style.top = fromTop
 
         playGameButton.addEventListener("click", ()=>{
             if(!clicked){ clicked = true;
@@ -123,13 +127,12 @@ export function loadSplash(gameContainer) {
         return playGameButton
     }
 
-    function loadInstructionsButton(container){
+    function loadInstructionsButton(container,fromTop){
         let instructionsButton = document.createElement("div")
         instructionsButton.id = "instructionsButton"
         instructionsButton.classList = "centerFitContent button"
         instructionsButton.textContent = "INSTRUCTIONS"
-        instructionsButton.style.top = "36%"
-
+        instructionsButton.style.top = fromTop
 
         instructionsButton.addEventListener("click", ()=>{
             if(!clicked){ clicked = true;
@@ -199,28 +202,32 @@ export function loadSplash(gameContainer) {
         backButton.animate(fadeIn, 900)
     }
     
-    let skipButton = loadSkipButton(gameContainer)
+    let skipButton = loadSkipButton(gameContainer, "80%")
     skipButton.animate(fadeIn, 400)
 
-    let preCred = loadPreCred(gameContainer)
-    preCred.animate(fadeInOut, 3000)
+    let preCred = loadPreCred(gameContainer, "50%")
+    preCred.animate(swipeFadeInOut("-10%", "50%", "60%"), 3000)
     preCred.style.opacity = 0
 
-    let title
+
 
     let titleBegin = setTimeout(() => {
-        title = loadTitle(gameContainer)
+        let title = loadTitle(gameContainer,"40%")
         title.animate(swipeIn, 2000)
         title.animate(fadeIn, 2000)
         let titleRise = setTimeout(() => {
-            title.animate(floatUp, 2000)
-            title.style.top = "30%"
+            title.animate(floatFromTo("40%","20%"), 1500)
+            title.style.top = "20%"
             let instructionsButtonTimeOut = setTimeout(() => {
-                loadInstructionsButton(gameContainer).animate(fadeIn, 1000)
-            }, 700 );
+                let instructionsButton = loadInstructionsButton(gameContainer, "55%")
+                instructionsButton.style.top = "55%"
+                instructionsButton.animate(fadeIn, 1000)
+            }, 300 );
             let playButtonTimeout = setTimeout(() => {
-                loadPlayGameButton(gameContainer).animate(fadeIn, 1000)
-            }, 200 );
+                let playGameButton = loadPlayGameButton(gameContainer , "40%")
+                playGameButton.animate(fadeIn, 1000)
+                playGameButton.style.top = "40%"
+            }, 600 );
             let removeSkipTimeOut = setTimeout(() => {
                 skipButton.style.opacity = 0
                 skipButton.animate(fadeOut, 1000)
