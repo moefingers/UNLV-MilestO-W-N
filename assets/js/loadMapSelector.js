@@ -87,7 +87,7 @@ export async function loadMapSelector(gameContainer){
     buttonSelectorContainer.id = "buttonSelectorContainer"
     buttonSelectorContainer.style = `
     position: absolute;
-    width: 30%;
+    width: 60%;
     height: 5%;
     display: flex;
     flex-direction: row;
@@ -99,6 +99,8 @@ export async function loadMapSelector(gameContainer){
     `
 
     function changeMapSelector(direction, characterCount, container){
+        let containerWidthInPx = parseInt(container.parentElement.style.width) * parseInt(container.style.width) /100
+        let containerHeightInPx = parseInt(container.parentElement.style.height) * parseInt(container.style.height) /100
         selectorIndex += direction
          //load map based on selection and load other elements
         container.innerHTML = ""
@@ -114,19 +116,19 @@ export async function loadMapSelector(gameContainer){
             selectLeftButton.id = "selectLeftButton"
             selectLeftButton.classList = "leftArrow graphicButton"
             
-            selectLeftButton.style = `width: 30%; height: 100%;`
+            selectLeftButton.style = `width: ${containerHeightInPx/8}px; height: 100%;`
             selectLeftButton.addEventListener("click", ()=>{if(selectorIndex > 0){changeMapSelector(-1, characterCount, selectorContainer)}},false)
             buttonSelectorContainer.append(selectLeftButton)
-        } else if (selectorIndex <= 0){let placeHolder = document.createElement("div"); placeHolder.style = "width: 30%"; buttonSelectorContainer.append(placeHolder)}
+        } else if (selectorIndex <= 0){let placeHolder = document.createElement("div"); placeHolder.style = `width: ${containerHeightInPx/8}px`; buttonSelectorContainer.append(placeHolder)}
         buttonSelectorContainer.append(mapNameDiv)
         if(selectorIndex < mapArray.length - 1) {
             let selectRightButton = document.createElement("div")
             selectRightButton.id = "selectRightButton"
             selectRightButton.classList = "rightArrow graphicButton"
-            selectRightButton.style = `width: 30%; height: 100%;`
+            selectRightButton.style = `width: ${containerHeightInPx/8}px; height: 100%;`
             selectRightButton.addEventListener("click", ()=>{if(selectorIndex < mapArray.length -1){changeMapSelector(1, characterCount, selectorContainer)}},false)
             buttonSelectorContainer.append(selectRightButton)
-        } else if (selectorIndex >= mapArray.length -1){let placeHolder = document.createElement("div"); placeHolder.style = "width: 30%"; buttonSelectorContainer.append(placeHolder)}
+        } else if (selectorIndex >= mapArray.length -1){let placeHolder = document.createElement("div"); placeHolder.style = `width: ${containerHeightInPx/8}px`; buttonSelectorContainer.append(placeHolder)}
         gameContainer.append(buttonSelectorContainer)
         buttonSelectorContainer.animate(fadeIn, 500)
 

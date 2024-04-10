@@ -5,6 +5,12 @@ Param 1 string
 Param 2 (array) integers will become pixels exactly  [0] == width  && [1] == height
 Param 3 (array) integers will denote how many whole blocks across and down [0] == across  && [1] == down
 */
+function pulseFromTo (fromWidth, fromHeight, toWidth, toHeight, easing){
+    return [
+        {width: fromWidth, height: fromHeight, easing: easing},
+        {width: toWidth, height: toHeight}
+    ]
+}
 export async function generateCharacter(teamColor, sizeArray, locArray, keyArray, fullControlSize, mapAreaDiv, identifier) {
     let left = locArray[0] * fullControlSize
     let top = locArray[1] * fullControlSize
@@ -22,6 +28,11 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
     `)
     characterBlob.pseudoCoords = locArray
     characterBlob.classList = `polygonDeformedOctagon characterBlobs${identifier}`
+
+    characterBlob.animate(pulseFromTo(
+        `${sizeArray[0]}px`, `${sizeArray[1]}px`,
+        `${sizeArray[0] * .8}px`, `${sizeArray[1] * .8}px`),
+        {duration: 1000, iterations: Infinity, direction: "alternate"})
 
     function changeImage(newImageParam){
         if (newImageParam = "itemHeld") {
