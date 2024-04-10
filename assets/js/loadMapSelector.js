@@ -24,6 +24,13 @@ let fadeIn = [
 
 ]
 
+function pulseFromTo (fromWidth, fromHeight, toWidth, toHeight, easing){
+    return [
+        {width: fromWidth, height: fromHeight, easing: easing},
+        {width: toWidth, height: toHeight}
+    ]
+}
+
 export async function loadMapSelector(gameContainer){
     let characterKeysArray = {
         player1:["w","a","s","d"],
@@ -35,8 +42,8 @@ export async function loadMapSelector(gameContainer){
     let selectorIndex = 0
     let characterCount = 1
     let mapProperties
-    let characterColorArray = {1:"green",2:"red",3:"blue",4:"lightblue"}
-    let colorArray = ["red","orange","yellow","green","blue","indigo","violet"]
+    let characterColorObject = {1:"green",2:"red",3:"blue",4:"lightblue"}
+    let colorArray = ["red","orange","yellow","green","blue","lightblue","indigo","violet"]
     let scoreBoardElementsArray = []
     let mapArray =  []
     for (let map in maps){
@@ -58,7 +65,7 @@ export async function loadMapSelector(gameContainer){
         height: 80%;
         opacity: 1;
         background: lightgray;
-        border-radius: 5%;
+        border-radius: 30px;
     `
 
  
@@ -105,8 +112,9 @@ export async function loadMapSelector(gameContainer){
         if(selectorIndex > 0){
             let selectLeftButton = document.createElement("div")
             selectLeftButton.id = "selectLeftButton"
-            selectLeftButton.className = "leftArrow"
-            selectLeftButton.style = `width: 30%; height: 100%; background:black`
+            selectLeftButton.classList = "leftArrow graphicButton"
+            
+            selectLeftButton.style = `width: 30%; height: 100%;`
             selectLeftButton.addEventListener("click", ()=>{if(selectorIndex > 0){changeMapSelector(-1, characterCount, selectorContainer)}},false)
             buttonSelectorContainer.append(selectLeftButton)
         } else if (selectorIndex <= 0){let placeHolder = document.createElement("div"); placeHolder.style = "width: 30%"; buttonSelectorContainer.append(placeHolder)}
@@ -114,8 +122,8 @@ export async function loadMapSelector(gameContainer){
         if(selectorIndex < mapArray.length - 1) {
             let selectRightButton = document.createElement("div")
             selectRightButton.id = "selectRightButton"
-            selectRightButton.className = "rightArrow"
-            selectRightButton.style = `width: 30%; height: 100%; background:black`
+            selectRightButton.classList = "rightArrow graphicButton"
+            selectRightButton.style = `width: 30%; height: 100%;`
             selectRightButton.addEventListener("click", ()=>{if(selectorIndex < mapArray.length -1){changeMapSelector(1, characterCount, selectorContainer)}},false)
             buttonSelectorContainer.append(selectRightButton)
         } else if (selectorIndex >= mapArray.length -1){let placeHolder = document.createElement("div"); placeHolder.style = "width: 30%"; buttonSelectorContainer.append(placeHolder)}
@@ -127,7 +135,7 @@ export async function loadMapSelector(gameContainer){
 
     function loadCharactersOnMap(mapProperties){
         for(let count = 1; count <= characterCount; count++){
-            generateCharacter(characterColorArray[count], characterSize, mapProperties.spawns["player" + count], false, mapProperties.fullControlSize, mapProperties.mapAreaElement, `previewChar${count}`)
+            generateCharacter(characterColorObject[count], characterSize, mapProperties.spawns["player" + count], false, mapProperties.fullControlSize, mapProperties.mapAreaElement, `${count}`)
             
         }   
 
@@ -138,7 +146,7 @@ export async function loadMapSelector(gameContainer){
         let containerHeightInPx = parseInt(container.parentElement.style.height) * parseInt(container.style.height) /100
         characterCount += direction
         let oldBlobList = undefined
-        oldBlobList = document.querySelectorAll("#mapArea > .polygonDeformedOctagon")
+        oldBlobList = document.querySelectorAll("#mapArea .polygonDeformedOctagon")
         console.log(oldBlobList)
 
         oldBlobList.forEach(blob => blob.remove())
@@ -147,18 +155,46 @@ export async function loadMapSelector(gameContainer){
         if(characterCount > 1){
             let minusCharacterCountButton = document.createElement("div")
             minusCharacterCountButton.id = "minusCharacterCountButton"
-            minusCharacterCountButton.classList = "minusSymbol"
-            minusCharacterCountButton.style = `width: ${containerHeightInPx}px; height: 100%; background:black`
+            minusCharacterCountButton.classList = "minusSymbol graphicButton"
+            minusCharacterCountButton.style = `width: ${containerHeightInPx}px; height: 100%;`
             minusCharacterCountButton.addEventListener("click", ()=>{loadCharacterSelectors(-1, container)})
         
             container.append(minusCharacterCountButton)
         }
-        
+        function changeCharacterColor(countInQuestion, direction){
+            let indexOfColor = colorArray.indexOf(characterColorObject[countInQuestion])
+            if(indexOfColor + direction >= colorArray.length){
+                console.log("exceeded max in color array")
+                indexOfColor = 0
+            } else if(indexOfColor + direction < 0){indexOfColor = colorArray.length - 1
+            } else {indexOfColor += direction}
+            characterColorObject[countInQuestion] = colorArray[indexOfColor]
+            // console.log(`Color for ${countInQuestion} changed to ${characterColorObject[countInQuestion]}`)
+            // console.log(document.getElementsByClassName(`characterBlobs${countInQuestion}`).length)
+            // document.getElementsByClassName(`characterBlobs${countInQuestion}`).forEach(
+            //     blob => blob.style.background = characterColorObject[countInQuestion])
+            loadCharacterSelectors(0,container)
+            validateCharacterColor(countInQuestion, direction)
+        }
+        function validateCharacterColor(countInQuestion, direction){
+            for(let eachCharacterCount = 1; eachCharacterCount <= characterCount; eachCharacterCount++){
+                  
+                if(characterColorObject[countInQuestion] == characterColorObject[eachCharacterCount] &&
+                    countInQuestion != eachCharacterCount){
+                        //conflict
+                        console.log(`${countInQuestion} conflicts with ${eachCharacterCount}: ${characterColorObject[eachCharacterCount]} in ${characterCount} characters`)
+                        changeCharacterColor(countInQuestion, direction)
+                    }
+            
+            }
+           
+
+        }
+        loadCharactersOnMap(mapProperties)
         for(let count = 1; count <= characterCount; count++){
-            loadCharactersOnMap(mapProperties)
             let characterSelector = document.createElement("div")
             characterSelector.style = `
-            width: 20%;
+            width: ${containerHeightInPx}px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -166,29 +202,35 @@ export async function loadMapSelector(gameContainer){
             `
             let changeCharacterUp = document.createElement("div")
             changeCharacterUp.id = `changeCharacterUp${count}`
-            changeCharacterUp.className = "upChevron"
-            changeCharacterUp.style = `width: 30%; height: 20%; background:black; margin:auto;`
-            changeCharacterUp.addEventListener("click", ()=>{}, false)
+            changeCharacterUp.classList = "upChevron graphicButton"
+            changeCharacterUp.style = `width: 50%; height: 20%; margin:auto;`
+            changeCharacterUp.addEventListener("click", ()=>{changeCharacterColor(count, +1)}, false)
 
             let characterBlob = document.createElement("div")
             characterBlob.id = `characterBlob${count}`
-            characterBlob.className = `polygonDeformedOctagon`
-            characterBlob.style = `width: ${characterSize[0]}px; height: ${characterSize[1]}px; background:${characterColorArray[count]}; margin:auto;`
+            characterBlob.classList = `polygonDeformedOctagon characterBlobs${count}`
+            characterBlob.style = `width: ${characterSize[0]}px; height: ${characterSize[1]}px; background:${characterColorObject[count]}; margin:auto;`
+            characterBlob.animate(pulseFromTo(
+                `${characterSize[0]}px`, `${characterSize[1]}px`,
+                `${characterSize[0] * .8}px`, `${characterSize[1] * .8}px`),
+                {duration: 1000, iterations: Infinity, direction: "alternate"})
 
             let changeCharacterDown = document.createElement("div")
-            changeCharacterUp.id = `changeCharacterDown${count}`
-            changeCharacterDown.className = `downChevron`
-            changeCharacterDown.style = `width: 30%; height: 20%; background:black; margin:auto;`
+            changeCharacterDown.id = `changeCharacterDown${count}`
+            changeCharacterDown.classList = `downChevron graphicButton`
+            changeCharacterDown.style = `width: 50%; height: 20%; margin:auto;`
+            changeCharacterDown.addEventListener("click", ()=>{changeCharacterColor(count, -1)}, false)
 
             characterSelector.append(changeCharacterUp,characterBlob,changeCharacterDown)
             container.append(characterSelector)
         }
+        console.log(document.querySelectorAll("#mapArea .polygonDeformedOctagon"))
         if(characterCount < 4){
             let plusCharacterCountButton = document.createElement("div")
             plusCharacterCountButton.id = "plusCharacterCountButton"
-            plusCharacterCountButton.classList = "plusSymbol"
-            plusCharacterCountButton.style = `width: ${containerHeightInPx}px; height: 100%; background:black;`
-            plusCharacterCountButton.addEventListener("click", ()=>{loadCharacterSelectors(1, container)})
+            plusCharacterCountButton.classList = "plusSymbol graphicButton"
+            plusCharacterCountButton.style = `width: ${containerHeightInPx}px; height: 100%;`
+            plusCharacterCountButton.addEventListener("click", ()=>{loadCharacterSelectors(1, container); validateCharacterColor(characterCount, 1)})
         
             container.append(plusCharacterCountButton)
         }
@@ -246,10 +288,10 @@ export async function loadMapSelector(gameContainer){
           let mapProperties = loadMap(maps[mapArray[selectorIndex].mapName], innerGameContainer)//loadmap
           let playerObject = {}
           for(let count = 1; count <= characterCount; count++){
-            generateCharacter(characterColorArray[count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, count)
+            generateCharacter(characterColorObject[count], characterSize, mapProperties.spawns["player" + count], characterKeysArray["player" + count], mapProperties.fullControlSize, mapProperties.mapAreaElement, count)
             
-            scoreBoardElementsArray.push(generateScoreBoards(count, characterColorArray[count], gameContainer));
-            playerObject[count] = characterColorArray[count]
+            scoreBoardElementsArray.push(generateScoreBoards(count, characterColorObject[count], gameContainer));
+            playerObject[count] = characterColorObject[count]
           }
           generateTimer(80,innerGameContainer,playerObject, scoreBoardElementsArray)
         }      

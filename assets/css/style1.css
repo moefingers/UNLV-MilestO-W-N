@@ -83,6 +83,18 @@ body {
     font-weight: bold;
 }
 
+.graphicButton {
+    cursor: pointer;
+    background: black;
+}
+.graphicButton:hover {
+    background: darkred
+}
+.graphicButton:active {
+    background-color: red;
+    font-weight: bold;
+}
+
 #title {
     font-size:  7rem;
 }
@@ -124,6 +136,7 @@ body {
 .minusSymbol {
     clip-path: polygon(0 35%, 100% 35%, 100% 65%, 0 65%);
 }
+
 
 .controlBlock {
     clip-path: polygon(

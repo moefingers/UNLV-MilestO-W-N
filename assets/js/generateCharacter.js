@@ -21,7 +21,7 @@ export async function generateCharacter(teamColor, sizeArray, locArray, keyArray
     translate: -50% -50%
     `)
     characterBlob.pseudoCoords = locArray
-    characterBlob.className = "polygonDeformedOctagon"
+    characterBlob.classList = `polygonDeformedOctagon characterBlobs${identifier}`
 
     function changeImage(newImageParam){
         if (newImageParam = "itemHeld") {
