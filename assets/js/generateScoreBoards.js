@@ -19,6 +19,7 @@ export function generateScoreBoards(playerNumber, color, container){
     score.style.position = "absolute"
     score.style.color = color
     score.style.backgroundColor = "rgba(255,255,255,0.5)"
+    score.style.borderRadius = "5px"
     score.score = 0
     score.style.fontWeight = "bold"
     score.style.fontSize = "1.8rem"

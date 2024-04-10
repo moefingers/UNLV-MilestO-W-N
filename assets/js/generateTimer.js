@@ -21,6 +21,7 @@ export function generateTimer(time, container, playerObject, scoreBoardElementsA
     font-size: 2rem
     `
     timerDiv.style.backgroundColor = "rgba(255,255,255,0.5)"
+    timerDiv.style.borderRadius = "5px"
 
     container.append(timerDiv)
 
