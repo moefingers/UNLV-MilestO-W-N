@@ -157,7 +157,7 @@ export function loadSplash(gameContainer) {
     function loadInstructions(container){
         let instructionsDiv = document.createElement("div")
         instructionsDiv.id = "instructionsDiv"
-        instructionsDiv.className = "centerFitContent"
+        instructionsDiv.classList = "centerFitContent instructions-div"
         instructionsDiv.innerHTML = `
         Movement
         <br>Use the following keys based on the player to move your character:
